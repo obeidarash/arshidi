@@ -11,3 +11,4 @@ class ContactsAdmin(admin.ModelAdmin):
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ('name',)
+    autocomplete_fields = ('contact', )

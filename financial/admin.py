@@ -4,9 +4,10 @@ from .models import Expense, Income, Salary
 
 @admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'price', 'currency',)
+    list_display = ('title', 'to', 'price', 'currency', 'date')
     search_fields = ('title',)
     list_filter = ('currency', 'date',)
+    autocomplete_fields = ('project',)
 
 
 @admin.register(Salary)
@@ -14,6 +15,7 @@ class SalaryAdmin(admin.ModelAdmin):
     list_display = ('title', 'price', 'currency',)
     search_fields = ('title',)
     list_filter = ('currency', 'date',)
+    autocomplete_fields = ('employee',)
 
 
 @admin.register(Income)
