@@ -43,7 +43,7 @@ class Income(models.Model):
     title = models.CharField(max_length=512, help_text='2nd payment from Django project X')
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     price = models.BigIntegerField()
-    currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
+    currency = models.CharField(choices=CURRENCY, default=CURRENCY[1], max_length=64)
     date = models.DateField(verbose_name='Income Date')
     link = models.URLField(null=True, blank=True)
     description = HTMLField(null=True, blank=True)

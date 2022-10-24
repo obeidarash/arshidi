@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'financial',
     'management',
+    'human_resources',
+    'contacts',
     'tinymce',  # https://pypi.org/project/django-tinymce/
 ]
 
