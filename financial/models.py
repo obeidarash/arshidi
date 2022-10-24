@@ -4,6 +4,8 @@ from management.models import Project
 from human_resources.models import Employee
 import os
 import uuid
+from django.dispatch import receiver
+from django.db.models.signals import post_delete, pre_save
 
 CURRENCY = [
     ('IRR', 'Rial'),
@@ -40,8 +42,6 @@ class Expense(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    # Todo: add attach file
-
     def __str__(self):
         return self.title
 
@@ -59,6 +59,9 @@ class Salary(models.Model):
 
     # Todo: you can connected to timesheet
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         verbose_name_plural = 'Salaries'
 
@@ -75,3 +78,83 @@ class Income(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
+
+# delete attach file after model has been deleted
+@receiver(post_delete, sender=Expense)
+def post_save_expense(sender, instance, *args, **kwargs):
+    """ Clean Old Image file """
+    try:
+        instance.attach.delete(save=False)
+    except:
+        pass
+
+# update attach file after model has been updated
+@receiver(pre_save, sender=Expense)
+def pre_save_expense(sender, instance, *args, **kwargs):
+    """ instance old image file will delete from os """
+    try:
+        old_img = instance.__class__.objects.get(id=instance.id).attach.path
+        try:
+            new_img = instance.attach.path
+        except:
+            new_img = None
+        if new_img != old_img:
+            import os
+            if os.path.exists(old_img):
+                os.remove(old_img)
+    except:
+        pass
+
+
+@receiver(post_delete, sender=Salary)
+def post_save_salary(sender, instance, *args, **kwargs):
+    """ Clean Old Image file """
+    try:
+        instance.attach.delete(save=False)
+    except:
+        pass
+
+
+@receiver(pre_save, sender=Salary)
+def pre_save_salary(sender, instance, *args, **kwargs):
+    """ instance old image file will delete from os """
+    try:
+        old_img = instance.__class__.objects.get(id=instance.id).attach.path
+        try:
+            new_img = instance.attach.path
+        except:
+            new_img = None
+        if new_img != old_img:
+            import os
+            if os.path.exists(old_img):
+                os.remove(old_img)
+    except:
+        pass
+
+
+@receiver(post_delete, sender=Income)
+def post_save_income(sender, instance, *args, **kwargs):
+    """ Clean Old Image file """
+    try:
+        instance.attach.delete(save=False)
+    except:
+        pass
+
+
+@receiver(pre_save, sender=Income)
+def pre_save_income(sender, instance, *args, **kwargs):
+    """ instance old image file will delete from os """
+    try:
+        old_img = instance.__class__.objects.get(id=instance.id).attach.path
+        try:
+            new_img = instance.attach.path
+        except:
+            new_img = None
+        if new_img != old_img:
+            import os
+            if os.path.exists(old_img):
+                os.remove(old_img)
+    except:
+        pass
