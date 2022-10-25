@@ -57,7 +57,7 @@ class Salary(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    # Todo: you can connected to timesheet
+    # Todo: you can connected to timesheet and automatically calculate hours or price with signals
 
     def __str__(self):
         return self.title

@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,6 +29,7 @@ INSTALLED_APPS = [
     'human_resources',
     'contacts',
     'tinymce',  # https://pypi.org/project/django-tinymce/
+    'django_countries',  # https://pypi.org/project/django-countries/
 ]
 
 MIDDLEWARE = [

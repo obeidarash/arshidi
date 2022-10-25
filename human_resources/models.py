@@ -1,5 +1,6 @@
 from django.db import models
 from tinymce.models import HTMLField
+from django_countries.fields import CountryField
 
 GENDER = [
     ('Mr', 'Mr'),
@@ -37,7 +38,7 @@ class Employee(models.Model):  # Todo: Think more about the name
     skills = models.ManyToManyField(Skill)
     positions = models.ManyToManyField(Position)
     link = models.URLField(null=True, blank=True)
-    # country = CountryField(blank_label='select country', null=True, blank=True)
+    country = CountryField(null=True, blank=True, blank_label='select country')
     city = models.CharField(max_length=64, null=True, blank=True)
     province = models.CharField(max_length=64, null=True, blank=True)
     address = models.CharField(max_length=512, null=True, blank=True)
