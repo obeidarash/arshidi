@@ -30,32 +30,32 @@ def upload_file_path(instance, filename):
 
 
 class Expense(models.Model):
-    title = models.CharField(max_length=512, help_text='Buy VPS')
-    to = models.CharField(max_length=256, help_text="UpWork, Uber ETC")
-    price = models.BigIntegerField()
+    title = models.CharField(max_length=512, help_text='Buy VPS', null=True)
+    to = models.CharField(max_length=256, help_text="UpWork, Uber ETC", null=True)
+    price = models.BigIntegerField(null=True)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
-    date = models.DateField(verbose_name='Pay Date')
+    date = models.DateField(verbose_name='Pay Date', null=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True)
     link = models.URLField(null=True, blank=True)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
     comment = HTMLField(null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.title
 
 
 class Salary(models.Model):
-    title = models.CharField(max_length=512, help_text='2nd payment to mr X')
+    title = models.CharField(max_length=512, help_text='2nd payment to mr X', null=True)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
-    price = models.BigIntegerField()
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    date = models.DateField(verbose_name='Pay Date')
+    price = models.BigIntegerField(null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
+    date = models.DateField(verbose_name='Pay Date', null=True)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
     comment = HTMLField(null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
 
     # Todo: you can connected to timesheet and automatically calculate hours or price with signals
 
@@ -67,16 +67,16 @@ class Salary(models.Model):
 
 
 class Income(models.Model):
-    title = models.CharField(max_length=512, help_text='2nd payment from Django project X')
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    title = models.CharField(max_length=512, help_text='2nd payment from Django project X', null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[1], max_length=64)
-    price = models.BigIntegerField()
-    date = models.DateField(verbose_name='Income Date')
+    price = models.BigIntegerField(null=True)
+    date = models.DateField(verbose_name='Income Date', null=True)
     link = models.URLField(null=True, blank=True)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
     comment = HTMLField(null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.title
