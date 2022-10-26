@@ -25,10 +25,13 @@ INSTALLED_APPS = [
     'contacts',
     'tinymce',  # https://pypi.org/project/django-tinymce/
     'django_countries',  # https://pypi.org/project/django-countries/
+    "whitenoise.runserver_nostatic",  # http://whitenoise.evans.io/en/stable/django.html
+
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Whitenoise
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
