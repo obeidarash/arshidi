@@ -5,9 +5,9 @@ import financial.models
 from human_resources.models import Skill, Position, Employee
 
 CURRENCY = [
-    ('IRR', 'Rial'),
     ('USD', 'US Dollar'),
     ('USDT', 'Tether'),
+    ('IRR', 'Rial'),
 ]
 
 STATUS = [
@@ -53,6 +53,7 @@ class Project(models.Model):
     experience_level = models.CharField(choices=EXPERIENCE, default=EXPERIENCE[0], max_length=256)
     duration = models.CharField(choices=DURATION, default=DURATION[0], max_length=256)
     budget_type = models.CharField(choices=BUDGET, default=BUDGET[0], max_length=256)
+    currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=256)
     fixed_budget = models.IntegerField(default=0, null=True, blank=True)
     min_budget = models.IntegerField(default=0, null=True, blank=True, verbose_name='Min pay / hour',
                                      help_text="Minimum price per hour work")
