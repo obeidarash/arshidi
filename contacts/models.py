@@ -14,6 +14,14 @@ class Contact(models.Model):
     link = models.URLField(null=True, blank=True)
     comment = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        if self.firstname and self.lastname:
+            return self.firstname + " " + self.lastname
+        if not self.firstname and self.lastname:
+            return self.lastname
+        if self.firstname and not self.lastname:
+            return self.firstname
+
     # todo: hashtag
 
 
@@ -28,7 +36,7 @@ class Company(models.Model):
     city = models.CharField(max_length=64, null=True, blank=True)
     province = models.CharField(max_length=64, null=True, blank=True)
     address = models.CharField(max_length=512, null=True, blank=True)
-    # plate = models.IntegerField(null=True, blank=True)
+    plate = models.IntegerField(null=True, blank=True)
     zipcode = models.CharField(max_length=32, null=True, blank=True)
     comment = models.TextField(blank=True, null=True)
 
