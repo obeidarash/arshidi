@@ -38,7 +38,7 @@ class Expense(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True)
     link = models.URLField(null=True, blank=True)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
-    comment = HTMLField(null=True, blank=True)
+    comment = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
 
@@ -53,7 +53,7 @@ class Salary(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
     date = models.DateField(verbose_name='Pay Date', null=True)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
-    comment = HTMLField(null=True, blank=True)
+    comment = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
 
@@ -74,7 +74,7 @@ class Income(models.Model):
     date = models.DateField(verbose_name='Income Date', null=True)
     link = models.URLField(null=True, blank=True)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
-    comment = HTMLField(null=True, blank=True)
+    comment = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
 

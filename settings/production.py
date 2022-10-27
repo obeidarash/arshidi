@@ -2,7 +2,7 @@ from .base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['shortinvestincoin.com', 'www.shortinvestincoin.com']
+ALLOWED_HOSTS = ['arshidi.shortinvestincoin.com', 'www.arshidi.shortinvestincoin.com']
 
 
 DATABASES = {
