@@ -12,10 +12,10 @@ class ExpenseAdmin(admin.ModelAdmin):
 
 @admin.register(Salary)
 class SalaryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'price', 'currency',)
+    list_display = ('employee', 'price', 'currency',)
     search_fields = ('title',)
     list_filter = ('currency', 'date',)
-    autocomplete_fields = ('employee',)
+    autocomplete_fields = ('employee', 'project',)
 
 
 @admin.register(Income)

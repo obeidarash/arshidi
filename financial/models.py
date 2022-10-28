@@ -47,11 +47,11 @@ class Expense(models.Model):
 
 
 class Salary(models.Model):
-    title = models.CharField(max_length=512, help_text='2nd payment to mr X', null=True)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
     price = models.BigIntegerField(null=True)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
     date = models.DateField(verbose_name='Pay Date', null=True)
+    project = models.ManyToManyField(Project, blank=True, verbose_name="Project(s)")
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
     comment = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
@@ -60,7 +60,8 @@ class Salary(models.Model):
     # Todo: you can connected to timesheet and automatically calculate hours or price with signals
 
     def __str__(self):
-        return self.title
+        return str(self.employee.firstname) + " " + str(self.employee.lastname) + ": " + str(
+            self.price) + " " + self.currency
 
     class Meta:
         verbose_name_plural = 'Salaries'
@@ -81,6 +82,7 @@ class Income(models.Model):
     def __str__(self):
         return self.title
 
+
 # delete attach file after model has been deleted
 @receiver(post_delete, sender=Expense)
 def post_save_expense(sender, instance, *args, **kwargs):
@@ -89,6 +91,7 @@ def post_save_expense(sender, instance, *args, **kwargs):
         instance.attach.delete(save=False)
     except:
         pass
+
 
 # update attach file after model has been updated
 @receiver(pre_save, sender=Expense)
