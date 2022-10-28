@@ -3,6 +3,7 @@ import os
 import uuid
 from django.dispatch import receiver
 from django.db.models.signals import post_delete, pre_save, post_save
+from management.models import Employee
 
 
 def get_filename_ext(filepath):
@@ -23,13 +24,12 @@ def upload_file_path(instance, filename):
 class File(models.Model):
     title = models.CharField(max_length=512)
     file = models.FileField(upload_to=upload_file_path)
+    employee = models.ForeignKey(Employee, null=True, blank=True, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.title
-
-
 
 
 # delete attach file after model has been deleted

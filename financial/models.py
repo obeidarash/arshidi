@@ -1,6 +1,7 @@
 from django.db import models
 from tinymce.models import HTMLField
-from management.models import Project
+# from management.models import Project
+import management.models
 from human_resources.models import Employee
 import os
 import uuid
@@ -35,7 +36,8 @@ class Expense(models.Model):
     price = models.BigIntegerField(null=True)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
     date = models.DateField(verbose_name='Pay Date', null=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, blank=True, null=True)
+    project = models.ForeignKey('management.Project', related_name='expense_project', on_delete=models.CASCADE, blank=True,
+                                null=True)
     link = models.URLField(null=True, blank=True)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
     comment = models.TextField(null=True, blank=True)
@@ -51,7 +53,8 @@ class Salary(models.Model):
     price = models.BigIntegerField(null=True)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
     date = models.DateField(verbose_name='Pay Date', null=True)
-    project = models.ManyToManyField(Project, blank=True, verbose_name="Project(s)")
+    project = models.ManyToManyField('management.Project', related_name='salary_project', blank=True,
+                                     verbose_name="Project(s)")
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
     comment = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
@@ -69,7 +72,7 @@ class Salary(models.Model):
 
 class Income(models.Model):
     title = models.CharField(max_length=512, help_text='2nd payment from Django project X', null=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+    project = models.ForeignKey('management.Project', related_name='income_project', on_delete=models.CASCADE, null=True)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[1], max_length=64)
     price = models.BigIntegerField(null=True)
     date = models.DateField(verbose_name='Income Date', null=True)

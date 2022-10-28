@@ -1,6 +1,5 @@
 from django.db import models
 from tinymce.models import HTMLField
-
 import financial.models
 from human_resources.models import Skill, Position, Employee
 
