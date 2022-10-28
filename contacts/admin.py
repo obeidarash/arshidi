@@ -14,3 +14,4 @@ class ContactsAdmin(admin.ModelAdmin):
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ('name',)
     autocomplete_fields = ('contact',)
+    search_fields = ('name',)

@@ -1,7 +1,7 @@
 from django.db import models
 from tinymce.models import HTMLField
-import financial.models
 from human_resources.models import Skill, Position, Employee
+from contacts.models import Contact, Company
 
 CURRENCY = [
     ('USD', 'US Dollar'),
@@ -46,7 +46,7 @@ DURATION = [
 
 
 class Project(models.Model):
-    title = models.CharField(max_length=512, help_text='Project name or title')
+    title = models.CharField(max_length=512, help_text='Project name or title', verbose_name="Name")
     term = models.CharField(choices=TERM, default=TERM[0], max_length=256)
     project_type = models.CharField(choices=TYPE, default=TERM[0], max_length=256)
     experience_level = models.CharField(choices=EXPERIENCE, default=EXPERIENCE[0], max_length=256)
@@ -59,8 +59,12 @@ class Project(models.Model):
     max_budget = models.IntegerField(default=0, null=True, blank=True, verbose_name='max pay / hour',
                                      help_text="Maximum price per hour work")
     people = models.IntegerField(default=1, help_text="How many people this project need?")
-    employees = models.ManyToManyField(Employee, help_text="which people work on this project?", blank=True)
     skills = models.ManyToManyField(Skill, help_text="What kind of skills this project need?")
+    employees = models.ManyToManyField(Employee, help_text="which people work on this project?", blank=True)
+    company = models.ForeignKey(Company, related_name="project_company", on_delete=models.CASCADE, blank=True,
+                                null=True)
+    contact = models.ManyToManyField(Contact, related_name="project_contact", blank=True, verbose_name="Contact(s)",
+                                     help_text="Who are we in touch with in this project?")
     status = models.CharField(choices=STATUS, default=STATUS[0], max_length=128)
     link = models.URLField(null=True, blank=True)
     description = HTMLField(null=True, blank=True)

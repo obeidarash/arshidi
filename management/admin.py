@@ -15,7 +15,7 @@ class TimeSheetAdmin(admin.ModelAdmin):
 class ProjectAdmin(admin.ModelAdmin):
     form = ProjectAdminForm
     list_display = ('__str__', 'status',)
-    autocomplete_fields = ('skills', 'employees',)
+    autocomplete_fields = ('skills', 'employees', 'contact', 'company',)
     search_fields = ('title',)
     list_filter = ('status', 'budget_type',)
     ordering = ('-created',)
