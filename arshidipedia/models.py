@@ -55,6 +55,8 @@ class Library(models.Model):
     class Meta:
         verbose_name_plural = "Library"
 
+    # Todo: Add Hashtag
+
 
 # delete attach file after model has been deleted
 @receiver(post_delete, sender=Library)
