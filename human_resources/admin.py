@@ -5,9 +5,10 @@ from django.utils.html import format_html
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug',)
+    list_display = ('title',)
     search_fields = ('title',)
     prepopulated_fields = {'slug': ['title', ]}
+    ordering = ('-title',)
 
 
 @admin.register(Hire)
@@ -16,6 +17,7 @@ class HireAdmin(admin.ModelAdmin):
     autocomplete_fields = ('skills', 'positions',)
     search_fields = ('firstname', 'lastname', 'email', 'phone',)
     list_filter = ('positions', 'potential', 'interviewed',)
+    ordering = ('-positions',)
 
 
 @admin.register(Employee)
@@ -24,13 +26,14 @@ class EmployeeAdmin(admin.ModelAdmin):
     autocomplete_fields = ('skills', 'positions',)
     search_fields = ('firstname', 'lastname', 'email', 'phone',)
     list_filter = ('positions',)
-
+    ordering = ('-lastname',)
     # def email_link(self, obj):
     #     return format_html("<a href='mailto:{}' target='_blank'>{}</a>", obj.email, obj.email)
 
 
 @admin.register(Skill)
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug',)
+    list_display = ('title',)
     search_fields = ('title',)
     prepopulated_fields = {'slug': ['title', ]}
+    ordering = ('-title',)

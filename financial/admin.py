@@ -8,6 +8,7 @@ class ExpenseAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     list_filter = ('currency', 'date',)
     autocomplete_fields = ('project',)
+    ordering = ("-created",)
 
 
 @admin.register(Salary)
@@ -16,7 +17,7 @@ class SalaryAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     list_filter = ('currency', 'date',)
     autocomplete_fields = ('employee', 'project',)
-
+    ordering = ("-created",)
 
 @admin.register(Income)
 class IncomeAdmin(admin.ModelAdmin):
@@ -24,3 +25,4 @@ class IncomeAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     autocomplete_fields = ('project',)
     list_filter = ('currency', 'date',)
+    ordering = ("-created",)

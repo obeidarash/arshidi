@@ -71,7 +71,7 @@ class Project(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    # Todo: date, Duration, fixed price or not and ETC (Check upWork and freelancer),
+    # Todo: date,  or not and ETC (Check upWork and freelancer),
     # Todo: Category, (in progress or finish, just start)
     # Todo: connect to contact and company
 

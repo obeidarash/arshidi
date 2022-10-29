@@ -1,6 +1,10 @@
 from django.db import models
 from tinymce.models import HTMLField
 from django_countries.fields import CountryField
+from django.db.models.signals import post_delete, pre_save, post_save
+from django.dispatch import receiver
+import os
+import uuid
 
 GENDER = [
     ('Mr', 'Mr'),
@@ -12,6 +16,21 @@ CURRENCY = [
     ('USDT', 'Tether'),
     ('IRR', 'Rial'),
 ]
+
+
+def get_filename_ext(filepath):
+    base_name = os.path.basename(filepath)
+    name, ext = os.path.splitext(base_name)
+    return name, ext
+
+
+def upload_file_path(instance, filename):
+    from time import time
+    uid = str(uuid.uuid4().hex)[:10]
+    name, ext = get_filename_ext(filename)
+    time = str(time())
+    final_name = f"{uid}{time[:10:-1]}{ext}"
+    return f"human_resources/{final_name}"
 
 
 class Position(models.Model):
@@ -57,6 +76,8 @@ class Employee(models.Model):  # Todo: Think more about the name
     def __str__(self):
         return self.gender + " " + self.firstname + " " + self.lastname
 
+    # Todo: add is_active or is_working for us?
+
 
 class Hire(models.Model):
     potential = models.BooleanField(verbose_name='is Potential?')
@@ -73,6 +94,7 @@ class Hire(models.Model):
     currency = models.CharField(choices=CURRENCY, max_length=128, null=True, blank=True)
     min_salary = models.IntegerField(blank=True, null=True, verbose_name="Minimum Salary", help_text="per hour")
     max_salary = models.IntegerField(blank=True, null=True, verbose_name="Maximum Salary", help_text="per hour")
+    attach = models.FileField(upload_to=upload_file_path, null=True, blank=True, help_text="Like resume and CV")
     notes = HTMLField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -80,4 +102,32 @@ class Hire(models.Model):
     def __str__(self):
         return self.gender + " " + self.firstname + " " + self.lastname
 
-    # todo:  attach , /accept or not
+    # todo: accept or not?
+
+
+# delete attach file after model has been deleted
+@receiver(post_delete, sender=Hire)
+def post_save_expense(sender, instance, *args, **kwargs):
+    """ Clean Old Image file """
+    try:
+        instance.file.delete(save=False)
+    except:
+        pass
+
+
+# update attach file after model has been updated
+@receiver(pre_save, sender=Hire)
+def pre_save_expense(sender, instance, *args, **kwargs):
+    """ instance old image file will delete from os """
+    try:
+        old_img = instance.__class__.objects.get(id=instance.id).attach.path
+        try:
+            new_img = instance.file.path
+        except:
+            new_img = None
+        if new_img != old_img:
+            import os
+            if os.path.exists(old_img):
+                os.remove(old_img)
+    except:
+        pass

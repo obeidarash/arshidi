@@ -5,7 +5,7 @@ from .forms import ProjectAdminForm
 
 @admin.register(TimeSheet)
 class TimeSheetAdmin(admin.ModelAdmin):
-    list_display = ('project', 'employee', 'date', 'pk',)
+    list_display = ('employee', 'hour_work', 'price', 'project', 'date', 'pk',)
     search_fields = ('project', 'employee',)
     autocomplete_fields = ('project', 'employee',)
     ordering = ('-created',)
