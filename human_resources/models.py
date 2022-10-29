@@ -74,9 +74,10 @@ class Employee(models.Model):  # Todo: Think more about the name
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.gender + " " + self.firstname + " " + self.lastname
+        return self.firstname + " " + self.lastname
 
     # Todo: add is_active or is_working for us?
+    # Todo: national_id, passport_id, passport_expire,
 
 
 class Hire(models.Model):
@@ -100,7 +101,7 @@ class Hire(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.gender + " " + self.firstname + " " + self.lastname
+        return self.firstname + " " + self.lastname
 
     # todo: accept or not?
 

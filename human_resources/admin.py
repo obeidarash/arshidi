@@ -22,11 +22,14 @@ class HireAdmin(admin.ModelAdmin):
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'phone',)
+    list_display = ('__str__',)
     autocomplete_fields = ('skills', 'positions',)
     search_fields = ('firstname', 'lastname', 'email', 'phone',)
+    search_help_text = "Search in firstname, lastname, email and phone"
     list_filter = ('positions',)
     ordering = ('-lastname',)
+    filter_horizontal = ['positions']
+
     # def email_link(self, obj):
     #     return format_html("<a href='mailto:{}' target='_blank'>{}</a>", obj.email, obj.email)
 
