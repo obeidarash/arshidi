@@ -19,6 +19,7 @@ class SalaryAdmin(admin.ModelAdmin):
     autocomplete_fields = ('employee', 'project',)
     ordering = ("-created",)
 
+
 @admin.register(Income)
 class IncomeAdmin(admin.ModelAdmin):
     list_display = ('title', 'price', 'currency',)

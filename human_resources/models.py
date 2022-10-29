@@ -110,7 +110,7 @@ class Hire(models.Model):
 def post_save_expense(sender, instance, *args, **kwargs):
     """ Clean Old Image file """
     try:
-        instance.file.delete(save=False)
+        instance.attach.delete(save=False)
     except:
         pass
 
@@ -122,7 +122,7 @@ def pre_save_expense(sender, instance, *args, **kwargs):
     try:
         old_img = instance.__class__.objects.get(id=instance.id).attach.path
         try:
-            new_img = instance.file.path
+            new_img = instance.attach.path
         except:
             new_img = None
         if new_img != old_img:
