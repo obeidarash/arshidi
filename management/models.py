@@ -61,11 +61,12 @@ class Project(models.Model):
     status = models.CharField(choices=STATUS, default=STATUS[0], max_length=128,
                               help_text="https://www.indeed.com/career-advice/career-development/project-statuses")
     term = models.CharField(choices=TERM, default=TERM[0], max_length=256)
+    duration = models.CharField(choices=DURATION, default=DURATION[0], max_length=256)
+    category = models.CharField(choices=CATEGORY, default=CATEGORY[0], max_length=256)
     project_type = models.CharField(choices=TYPE, default=TERM[0], max_length=256)
     experience_level = models.CharField(choices=EXPERIENCE, default=EXPERIENCE[0], max_length=256)
-    duration = models.CharField(choices=DURATION, default=DURATION[0], max_length=256)
-    budget_type = models.CharField(choices=BUDGET, default=BUDGET[0], max_length=256)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=256)
+    budget_type = models.CharField(choices=BUDGET, default=BUDGET[0], max_length=256)
     fixed_budget = models.IntegerField(default=0, null=True, blank=True)
     min_budget = models.IntegerField(default=0, null=True, blank=True, verbose_name='Min pay / hour',
                                      help_text="Minimum price per hour work")
@@ -73,7 +74,6 @@ class Project(models.Model):
                                      help_text="Maximum price per hour work")
     people = models.IntegerField(default=1, help_text="How many people this project need?")
     skills = models.ManyToManyField(Skill, help_text="What kind of skills this project need?")
-    category = models.CharField(choices=CATEGORY, default=CATEGORY[0], max_length=256)
     deadline = models.DateField(null=True, blank=True)
     employees = models.ManyToManyField(Employee, help_text="which people work on this project?", blank=True)
     company = models.ForeignKey(Company, related_name="project_company", on_delete=models.CASCADE, blank=True,

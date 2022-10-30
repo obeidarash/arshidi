@@ -9,6 +9,9 @@ class TimeSheetAdmin(admin.ModelAdmin):
     search_fields = ('project', 'employee',)
     autocomplete_fields = ('project', 'employee',)
     ordering = ('-created',)
+    radio_fields = {
+        'currency': admin.HORIZONTAL,
+    }
 
 
 @admin.register(Project)
@@ -21,3 +24,10 @@ class ProjectAdmin(admin.ModelAdmin):
     list_filter = ('status', 'category', 'budget_type', 'deadline',)
     ordering = ('-created',)
     filter_horizontal = ('skills',)
+    radio_fields = {
+        'experience_level': admin.HORIZONTAL,
+        'budget_type': admin.HORIZONTAL,
+        'project_type': admin.HORIZONTAL,
+        'currency': admin.HORIZONTAL,
+        'category': admin.HORIZONTAL,
+    }

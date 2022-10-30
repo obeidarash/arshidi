@@ -1,3 +1,4 @@
+from django import forms
 from django.db import models
 from tinymce.models import HTMLField
 # from management.models import Project
@@ -8,10 +9,15 @@ import uuid
 from django.dispatch import receiver
 from django.db.models.signals import post_delete, pre_save, post_save
 
+SOURCE = [
+    ('employee', 'Employee'),
+    ('company', 'Company')
+]
+
 CURRENCY = [
-    ('IRR', 'Rial'),
     ('USD', 'US Dollar'),
     ('USDT', 'Tether'),
+    ('IRR', 'Rial'),
 ]
 
 
@@ -35,8 +41,11 @@ class Expense(models.Model):
     to = models.CharField(max_length=256, help_text="UpWork, Uber ETC", null=True)
     price = models.BigIntegerField(null=True)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
+    source = models.CharField(choices=SOURCE, default=SOURCE[0], max_length=32)
+    payer = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField(verbose_name='Pay Date', null=True)
-    project = models.ForeignKey('management.Project', related_name='expense_project', on_delete=models.CASCADE, blank=True,
+    project = models.ForeignKey('management.Project', related_name='expense_project', on_delete=models.CASCADE,
+                                blank=True,
                                 null=True)
     link = models.URLField(null=True, blank=True)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
@@ -47,9 +56,11 @@ class Expense(models.Model):
     def __str__(self):
         return self.title
 
+    # Todo: Approved?
+
 
 class Salary(models.Model):
-    currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
+    currency = models.CharField(choices=CURRENCY, default=CURRENCY[2], max_length=64)
     price = models.BigIntegerField(null=True)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
     date = models.DateField(verbose_name='Pay Date', null=True)
@@ -61,7 +72,7 @@ class Salary(models.Model):
     updated = models.DateTimeField(auto_now=True, null=True)
 
     # Todo: you can connected to timesheet and automatically calculate hours or price with signals
-
+    # Todo: Add bank account
     def __str__(self):
         return str(self.employee.firstname) + " " + str(self.employee.lastname) + ": " + str(
             self.price) + " " + self.currency
@@ -72,8 +83,9 @@ class Salary(models.Model):
 
 class Income(models.Model):
     title = models.CharField(max_length=512, help_text='2nd payment from Django project X', null=True)
-    project = models.ForeignKey('management.Project', related_name='income_project', on_delete=models.CASCADE, null=True)
-    currency = models.CharField(choices=CURRENCY, default=CURRENCY[1], max_length=64)
+    project = models.ForeignKey('management.Project', related_name='income_project', on_delete=models.CASCADE,
+                                null=True)
+    currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
     price = models.BigIntegerField(null=True)
     date = models.DateField(verbose_name='Income Date', null=True)
     link = models.URLField(null=True, blank=True)

@@ -18,6 +18,10 @@ class HireAdmin(admin.ModelAdmin):
     search_fields = ('firstname', 'lastname', 'email', 'phone',)
     list_filter = ('positions', 'potential', 'interviewed',)
     ordering = ('-positions',)
+    radio_fields = {
+        'gender': admin.HORIZONTAL,
+        'currency': admin.HORIZONTAL
+    }
 
 
 @admin.register(Employee)
@@ -29,6 +33,9 @@ class EmployeeAdmin(admin.ModelAdmin):
     list_filter = ('positions',)
     ordering = ('-lastname',)
     filter_horizontal = ['positions']
+    radio_fields = {
+        'gender': admin.HORIZONTAL,
+    }
 
     # def email_link(self, obj):
     #     return format_html("<a href='mailto:{}' target='_blank'>{}</a>", obj.email, obj.email)
