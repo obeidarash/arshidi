@@ -10,8 +10,14 @@ CURRENCY = [
 ]
 
 STATUS = [
-    ('start', 'Start'),
-    ('finished', 'Finished'),
+    ('upcoming', 'Upcoming'),
+    ('not-started', 'Not started'),
+    ('active', 'Active'),
+    ('overdue', 'Overdue'),
+    ('pending', 'Pending'),
+    ('canceled', 'Canceled'),
+    ('priority', 'Priority'),
+    ('completed', 'Completed'),
 ]
 
 TERM = [
@@ -47,6 +53,8 @@ DURATION = [
 
 class Project(models.Model):
     title = models.CharField(max_length=512, help_text='Project name or title', verbose_name="Name")
+    status = models.CharField(choices=STATUS, default=STATUS[0], max_length=128,
+                              help_text="https://www.indeed.com/career-advice/career-development/project-statuses")
     term = models.CharField(choices=TERM, default=TERM[0], max_length=256)
     project_type = models.CharField(choices=TYPE, default=TERM[0], max_length=256)
     experience_level = models.CharField(choices=EXPERIENCE, default=EXPERIENCE[0], max_length=256)
@@ -65,16 +73,15 @@ class Project(models.Model):
                                 null=True)
     contact = models.ManyToManyField(Contact, related_name="project_contact", blank=True, verbose_name="Contact(s)",
                                      help_text="Who are we in touch with in this project?")
-    status = models.CharField(choices=STATUS, default=STATUS[0], max_length=128)
     link = models.URLField(null=True, blank=True)
     description = HTMLField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     # Todo: date,  or not and ETC (Check upWork and freelancer),
-    # Todo: Category, (in progress or finish, just start)
+    # Todo: Category
     # Todo: connect to contact and company
-
+    # Todo: (Phase): plan, build and implement, transition & close, completed
     def __str__(self):
         return self.title
 
