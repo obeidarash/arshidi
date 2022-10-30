@@ -7,6 +7,7 @@ class FileAdmin(admin.ModelAdmin):
     list_display = ('title', 'employee', 'file',)
     search_fields = ('title',)
     autocomplete_fields = ("employee",)
+    list_filter = ('employee',)
     ordering = ('-created',)
 
 

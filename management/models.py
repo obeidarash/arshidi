@@ -9,6 +9,11 @@ CURRENCY = [
     ('IRR', 'Rial'),
 ]
 
+CATEGORY = [
+    ('programming', 'Programming'),
+    ('seo', 'SEO'),
+]
+
 STATUS = [
     ('upcoming', 'Upcoming'),
     ('not-started', 'Not started'),
@@ -68,6 +73,8 @@ class Project(models.Model):
                                      help_text="Maximum price per hour work")
     people = models.IntegerField(default=1, help_text="How many people this project need?")
     skills = models.ManyToManyField(Skill, help_text="What kind of skills this project need?")
+    category = models.CharField(choices=CATEGORY, default=CATEGORY[0], max_length=256)
+    deadline = models.DateField(null=True, blank=True)
     employees = models.ManyToManyField(Employee, help_text="which people work on this project?", blank=True)
     company = models.ForeignKey(Company, related_name="project_company", on_delete=models.CASCADE, blank=True,
                                 null=True)
@@ -80,8 +87,8 @@ class Project(models.Model):
 
     # Todo: date,  or not and ETC (Check upWork and freelancer),
     # Todo: Category
-    # Todo: connect to contact and company
     # Todo: (Phase): plan, build and implement, transition & close, completed
+
     def __str__(self):
         return self.title
 

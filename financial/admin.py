@@ -14,6 +14,7 @@ class ExpenseAdmin(admin.ModelAdmin):
 
 @admin.register(Salary)
 class SalaryAdmin(admin.ModelAdmin):
+    # fields = (('currency', 'price'), ('employee', 'date'), 'project', 'attach', 'comment')
     list_display = ('employee', 'price', 'currency', 'date',)
     search_fields = ('title',)
     list_filter = ('currency', 'date',)

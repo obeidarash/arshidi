@@ -31,7 +31,8 @@ def upload_file_path(instance, filename):
 class File(models.Model):
     title = models.CharField(max_length=512)
     file = models.FileField(upload_to=upload_file_path)
-    employee = models.ForeignKey(Employee, null=True, blank=True, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, null=True, blank=True, on_delete=models.CASCADE,
+                                 help_text="This file belongs to whom?")
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
 

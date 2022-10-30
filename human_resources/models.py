@@ -57,18 +57,23 @@ class Employee(models.Model):  # Todo: Think more about the name
     gender = models.CharField(choices=GENDER, max_length=64)
     firstname = models.CharField(max_length=128, null=True)
     lastname = models.CharField(max_length=128)
+    # Contact
     email = models.EmailField(unique=True)
     phone = models.CharField(unique=True, help_text="With dial code: +989125558877", max_length=64)
+    telephone = models.CharField(max_length=32, null=True, blank=True)
+    link = models.URLField(null=True, blank=True)
+
     birthday = models.DateField()
     skills = models.ManyToManyField(Skill)
     positions = models.ManyToManyField(Position)
-    link = models.URLField(null=True, blank=True)
+    # Address
     country = CountryField(null=True, blank=True, blank_label='select country')
     city = models.CharField(max_length=64, null=True, blank=True)
     province = models.CharField(max_length=64, null=True, blank=True)
     address = models.CharField(max_length=512, null=True, blank=True)
     plate = models.IntegerField(null=True, blank=True)
     zipcode = models.CharField(max_length=32, null=True, blank=True)
+
     description = HTMLField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

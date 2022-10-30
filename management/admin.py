@@ -13,9 +13,11 @@ class TimeSheetAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
+    # fields = ('title', ('budget_type', 'currency'), ('min_budget', 'max_budget', 'fixed_budget'),)
     form = ProjectAdminForm
-    list_display = ('__str__', 'status',)
+    list_display = ('__str__', 'deadline', 'status', 'category',)
     autocomplete_fields = ('skills', 'employees', 'contact', 'company',)
     search_fields = ('title',)
-    list_filter = ('status', 'budget_type',)
+    list_filter = ('status', 'category', 'budget_type', 'deadline',)
     ordering = ('-created',)
+    filter_horizontal = ('skills',)
