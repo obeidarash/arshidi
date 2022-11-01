@@ -40,8 +40,8 @@ class Expense(models.Model):
     title = models.CharField(max_length=512, help_text='Buy VPS', null=True)
     to = models.CharField(max_length=256, help_text="UpWork, Uber ETC", null=True)
     price = models.BigIntegerField(null=True)
-    currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
-    source = models.CharField(choices=SOURCE, default=SOURCE[0], max_length=32)
+    currency = models.CharField(choices=CURRENCY, default=CURRENCY[2], max_length=64)
+    source = models.CharField(choices=SOURCE, default=SOURCE[0], max_length=32, help_text="Who payed this expense?")
     payer = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField(verbose_name='Pay Date', null=True)
     project = models.ForeignKey('management.Project', related_name='expense_project', on_delete=models.CASCADE,

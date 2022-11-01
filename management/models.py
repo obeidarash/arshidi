@@ -11,6 +11,7 @@ CURRENCY = [
 
 CATEGORY = [
     ('programming', 'Programming'),
+    ('wordpress', 'Wordpress'),
     ('seo', 'SEO'),
 ]
 
@@ -63,7 +64,7 @@ class Project(models.Model):
     term = models.CharField(choices=TERM, default=TERM[0], max_length=256)
     duration = models.CharField(choices=DURATION, default=DURATION[0], max_length=256)
     category = models.CharField(choices=CATEGORY, default=CATEGORY[0], max_length=256)
-    project_type = models.CharField(choices=TYPE, default=TERM[0], max_length=256)
+    project_type = models.CharField(choices=TYPE, default=TYPE[0], max_length=256)
     experience_level = models.CharField(choices=EXPERIENCE, default=EXPERIENCE[0], max_length=256)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=256)
     budget_type = models.CharField(choices=BUDGET, default=BUDGET[0], max_length=256)
@@ -75,7 +76,7 @@ class Project(models.Model):
     people = models.IntegerField(default=1, help_text="How many people this project need?")
     skills = models.ManyToManyField(Skill, help_text="What kind of skills this project need?")
     deadline = models.DateField(null=True, blank=True)
-    employees = models.ManyToManyField(Employee, help_text="which people work on this project?", blank=True)
+    employees = models.ManyToManyField(Employee, help_text="which people work on this project?", blank=True, verbose_name="Employee(s)")
     company = models.ForeignKey(Company, related_name="project_company", on_delete=models.CASCADE, blank=True,
                                 null=True)
     contact = models.ManyToManyField(Contact, related_name="project_contact", blank=True, verbose_name="Contact(s)",
@@ -86,7 +87,6 @@ class Project(models.Model):
     updated = models.DateTimeField(auto_now=True)
 
     # Todo: date,  or not and ETC (Check upWork and freelancer),
-    # Todo: Category
     # Todo: (Phase): plan, build and implement, transition & close, completed
 
     def __str__(self):
