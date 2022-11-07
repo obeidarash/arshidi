@@ -2,6 +2,7 @@ from django.db import models
 from tinymce.models import HTMLField
 from human_resources.models import Skill, Position, Employee
 from contacts.models import Contact, Company
+from timezone_field import TimeZoneField
 
 CURRENCY = [
     ('USD', 'US Dollar'),
@@ -75,8 +76,10 @@ class Project(models.Model):
                                      help_text="Maximum price per hour work")
     people = models.IntegerField(default=1, help_text="How many people this project need?")
     skills = models.ManyToManyField(Skill, help_text="What kind of skills this project need?")
+    timezone = TimeZoneField(choices_display="WITH_GMT_OFFSET", blank=True, null=True, help_text="Client Timezone")
     deadline = models.DateField(null=True, blank=True)
-    employees = models.ManyToManyField(Employee, help_text="which people work on this project?", blank=True, verbose_name="Employee(s)")
+    employees = models.ManyToManyField(Employee, help_text="which people work on this project?", blank=True,
+                                       verbose_name="Employee(s)")
     company = models.ForeignKey(Company, related_name="project_company", on_delete=models.CASCADE, blank=True,
                                 null=True)
     contact = models.ManyToManyField(Contact, related_name="project_contact", blank=True, verbose_name="Contact(s)",

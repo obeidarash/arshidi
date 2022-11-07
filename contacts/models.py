@@ -44,9 +44,6 @@ class Contact(models.Model):
         if self.firstname and not self.lastname:
             return self.firstname
 
-    # todo: hashtag
-    # Todo: is_customer, is_supplier or make instead make hashTag
-
 
 class Company(models.Model):
     name = models.CharField(max_length=256)
@@ -74,5 +71,3 @@ class Company(models.Model):
 
     class Meta:
         verbose_name_plural = "Companies"
-
-    # Todo: is_customer, is_supplier or make instead make hashTag
