@@ -101,14 +101,14 @@ class Hire(models.Model):
     min_salary = models.IntegerField(blank=True, null=True, verbose_name="Minimum Salary", help_text="per hour")
     max_salary = models.IntegerField(blank=True, null=True, verbose_name="Maximum Salary", help_text="per hour")
     attach = models.FileField(upload_to=upload_file_path, null=True, blank=True, help_text="Like resume and CV")
-    notes = HTMLField(null=True, blank=True)
+    notes = HTMLField(null=True, blank=True, help_text="you can write things who happened in interview")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.firstname + " " + self.lastname
 
-    # todo: accept or not?
+    # todo: hire or not?, accept or not?, is_done?
 
 
 # delete attach file after model has been deleted

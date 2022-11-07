@@ -46,5 +46,5 @@ class SkillAdmin(admin.ModelAdmin):
     list_display = ('title',)
     search_fields = ('title',)
     prepopulated_fields = {'slug': ['title', ]}
-    ordering = ('title',)
+    ordering = ('-created',)
     list_per_page = 20

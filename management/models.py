@@ -3,6 +3,7 @@ from tinymce.models import HTMLField
 from human_resources.models import Skill, Position, Employee
 from contacts.models import Contact, Company
 from timezone_field import TimeZoneField
+from multiselectfield import MultiSelectField
 
 CURRENCY = [
     ('USD', 'US Dollar'),
@@ -64,7 +65,7 @@ class Project(models.Model):
                               help_text="https://www.indeed.com/career-advice/career-development/project-statuses")
     term = models.CharField(choices=TERM, default=TERM[0], max_length=256)
     duration = models.CharField(choices=DURATION, default=DURATION[0], max_length=256)
-    category = models.CharField(choices=CATEGORY, default=CATEGORY[0], max_length=256)
+    category = MultiSelectField(choices=CATEGORY, default=CATEGORY[0], max_length=256)
     project_type = models.CharField(choices=TYPE, default=TYPE[0], max_length=256)
     experience_level = models.CharField(choices=EXPERIENCE, default=EXPERIENCE[0], max_length=256)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=256)
