@@ -29,5 +29,5 @@ class ProjectAdmin(admin.ModelAdmin):
         'budget_type': admin.HORIZONTAL,
         'project_type': admin.HORIZONTAL,
         'currency': admin.HORIZONTAL,
-        'category': admin.HORIZONTAL,
+        # 'category': admin.HORIZONTAL,
     }
