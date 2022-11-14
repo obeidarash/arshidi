@@ -4,6 +4,8 @@ from human_resources.models import Skill, Position, Employee
 from contacts.models import Contact, Company
 from timezone_field import TimeZoneField
 from multiselectfield import MultiSelectField
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django_countries.fields import CountryField
 
 CURRENCY = [
     ('USD', 'US Dollar'),
@@ -75,8 +77,11 @@ class Project(models.Model):
                                      help_text="Minimum price per hour work")
     max_budget = models.IntegerField(default=0, null=True, blank=True, verbose_name='max pay / hour',
                                      help_text="Maximum price per hour work")
+    fee = models.IntegerField(default=0, null=True, blank=True,
+                              validators=[MaxValueValidator(100), MinValueValidator(1)], help_text="in %")
     people = models.IntegerField(default=1, help_text="How many people this project need?")
     skills = models.ManyToManyField(Skill, help_text="What kind of skills this project need?")
+    country = CountryField(blank_label="Select Country", blank=True, null=True)
     timezone = TimeZoneField(choices_display="WITH_GMT_OFFSET", blank=True, null=True, help_text="Client Timezone")
     deadline = models.DateField(null=True, blank=True)
     employees = models.ManyToManyField(Employee, help_text="which people work on this project?", blank=True,

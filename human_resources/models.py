@@ -88,7 +88,7 @@ class Employee(models.Model):  # Todo: Think more about the name
 class Hire(models.Model):
     potential = models.BooleanField(verbose_name='is Potential?')
     interviewed = models.BooleanField(verbose_name='is Interviewed?')
-    interview_date = models.DateField(null=True, blank=True)
+    interview_date = models.DateTimeField(null=True, blank=True)
     gender = models.CharField(choices=GENDER, max_length=64)
     firstname = models.CharField(max_length=128, null=True)
     lastname = models.CharField(max_length=128)

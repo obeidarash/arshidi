@@ -13,7 +13,7 @@ class PositionAdmin(admin.ModelAdmin):
 
 @admin.register(Hire)
 class HireAdmin(admin.ModelAdmin):
-    list_display = ('__str__', 'phone', 'potential', 'interviewed',)
+    list_display = ('__str__', 'phone', 'interview_date', 'potential', 'interviewed',)
     autocomplete_fields = ('skills', 'positions',)
     search_fields = ('firstname', 'lastname', 'email', 'phone',)
     list_filter = ('positions', 'potential', 'interviewed',)
