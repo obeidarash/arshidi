@@ -2,15 +2,10 @@ from django.db import models
 import os
 import uuid
 from django.dispatch import receiver
-from django.db.models.signals import post_delete, pre_save, post_save
+from django.db.models.signals import post_delete, pre_save
 from management.models import Employee
 from tinymce.models import HTMLField
-
-CATEGORY = [
-    ('web-development', 'Web Development'),
-    ('seo', 'SEO'),
-    ('wordpress', 'Wordpress'),
-]
+from multiselectfield import MultiSelectField
 
 
 def get_filename_ext(filepath):
@@ -28,6 +23,16 @@ def upload_file_path(instance, filename):
     return f"arshidipedia/{final_name}"
 
 
+# class Category(models.Model):
+#     title = models.CharField(max_length=128, help_text="SEO, models and etc", unique=True)
+#     slug = models.SlugField(unique=True)
+#     created = models.DateTimeField(auto_now_add=True, null=True)
+#     updated = models.DateTimeField(auto_now=True, null=True)
+#
+#     def __str__(self):
+#         return self.title
+
+
 class File(models.Model):
     title = models.CharField(max_length=512)
     file = models.FileField(upload_to=upload_file_path)
@@ -42,7 +47,7 @@ class File(models.Model):
 
 class Library(models.Model):
     title = models.CharField(max_length=512)
-    category = models.CharField(choices=CATEGORY, default=CATEGORY[0], max_length=128)
+    # category = models.ManyToManyField(Category, verbose_name='Category(s)')
     file = models.FileField(upload_to=upload_file_path, null=True, blank=True,
                             help_text="Upload your pdf, docx, .... file in here")
     link = models.URLField(blank=True, null=True)

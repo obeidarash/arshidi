@@ -36,6 +36,30 @@ def upload_file_path(instance, filename):
     return f"financial/{final_name}"
 
 
+class Bank(models.Model):
+    name = models.CharField(max_length=128, help_text="Resalat or Meli", unique=True)
+    slug = models.SlugField(unique=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class BankAccount(models.Model):
+    owner = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    bank = models.ForeignKey(Bank, on_delete=models.CASCADE, blank=False, null=True, help_text="Bank name")
+    card_number = models.CharField(max_length=20, null=False, blank=False,
+                                   help_text="16 Digits card number without dash")
+    account_number = models.CharField(max_length=40, null=False, blank=False, help_text="Shomare Hesab")
+    sheba = models.CharField(max_length=80, null=False, blank=False)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.owner.firstname + " " + self.owner.lastname + " - " + str(self.bank)
+
+
 class Expense(models.Model):
     title = models.CharField(max_length=512, help_text='Buy VPS', null=True)
     to = models.CharField(max_length=256, help_text="UpWork, Uber ETC", null=True)
@@ -60,12 +84,14 @@ class Expense(models.Model):
 
 
 class Salary(models.Model):
+    advance_payment = models.BooleanField(default=False, help_text="Prepayment or advance payment to the freelancer")
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[2], max_length=64)
     price = models.BigIntegerField(null=True)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
     date = models.DateField(verbose_name='Pay Date', null=True)
     project = models.ManyToManyField('management.Project', related_name='salary_project', blank=True,
                                      verbose_name="Project(s)")
+    bank_account = models.ForeignKey(BankAccount, blank=True, null=True, on_delete=models.CASCADE)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
     comment = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)

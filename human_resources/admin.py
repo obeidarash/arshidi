@@ -26,11 +26,11 @@ class HireAdmin(admin.ModelAdmin):
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ('__str__',)
+    list_display = ('__str__', 'is_active',)
     autocomplete_fields = ('skills', 'positions',)
     search_fields = ('firstname', 'lastname', 'email', 'phone',)
     search_help_text = "Search in firstname, lastname, email and phone"
-    list_filter = ('positions',)
+    list_filter = ('positions', 'is_active',)
     ordering = ('-lastname',)
     filter_horizontal = ['positions']
     radio_fields = {

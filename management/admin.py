@@ -5,13 +5,24 @@ from .forms import ProjectAdminForm
 
 @admin.register(TimeSheet)
 class TimeSheetAdmin(admin.ModelAdmin):
-    list_display = ('employee', 'hour_work', 'price', 'project', 'date', 'pk',)
+    list_display = ('employee', 'hour_work', 'payment_method', 'payment', 'currency', 'project', 'date', 'pk',)
     search_fields = ('project', 'employee',)
     autocomplete_fields = ('project', 'employee',)
     ordering = ('-created',)
     radio_fields = {
         'currency': admin.HORIZONTAL,
+        'payment_type': admin.HORIZONTAL,
     }
+
+    def payment(self, obj):
+        if obj.payment_hourly:
+            return obj.payment_hourly
+        return obj.payment_fixed
+
+    def payment_method(self, obj):
+        if obj.payment_type == 'hour':
+            return "Hourly"
+        return "Fixed"
 
 
 @admin.register(Project)

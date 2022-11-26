@@ -1,11 +1,10 @@
 from django.db import models
 from human_resources.models import GENDER
-from tinymce.models import HTMLField
 from django_countries.fields import CountryField
 
 
 class Tag(models.Model):
-    title = models.CharField(max_length=128, help_text="Customer or Supplier", unique=True)
+    title = models.CharField(max_length=128, help_text="Client or Supplier", unique=True)
     slug = models.SlugField(unique=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)

@@ -1,5 +1,21 @@
 from django.contrib import admin
-from .models import Expense, Income, Salary
+from .models import Expense, Income, Salary, BankAccount, Bank
+
+
+@admin.register(Bank)
+class BankAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+    prepopulated_fields = {'slug': ['name', ]}
+    ordering = ('-created',)
+    list_per_page = 20
+
+
+@admin.register(BankAccount)
+class BankAccountAdmin(admin.ModelAdmin):
+    search_fields = ('owner',)
+    list_display = ('owner', 'bank', 'card_number')
+    autocomplete_fields = ('owner', 'bank',)
 
 
 @admin.register(Expense)
@@ -19,10 +35,10 @@ class ExpenseAdmin(admin.ModelAdmin):
 @admin.register(Salary)
 class SalaryAdmin(admin.ModelAdmin):
     # fields = (('currency', 'price'), ('employee', 'date'), 'project', 'attach', 'comment')
-    list_display = ('employee', 'price', 'currency', 'date',)
+    list_display = ('employee', 'price', 'currency', 'date', 'advance_payment',)
     search_fields = ('title',)
     list_filter = ('currency', 'date',)
-    autocomplete_fields = ('employee', 'project',)
+    autocomplete_fields = ('employee', 'project', 'bank_account',)
     ordering = ("-date",)
     date_hierarchy = "date"
     radio_fields = {

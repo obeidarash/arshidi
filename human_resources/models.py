@@ -55,6 +55,7 @@ class Skill(models.Model):
 
 class Employee(models.Model):  # Todo: Think more about the name
     gender = models.CharField(choices=GENDER, max_length=64)
+    is_active = models.BooleanField(default=True, blank=False, null=False, help_text='This person is currently working')
     firstname = models.CharField(max_length=128, null=True)
     lastname = models.CharField(max_length=128)
     # Contact
