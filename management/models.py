@@ -59,6 +59,13 @@ DURATION = [
     ('3', '3 to 6 months'),
     ('4', 'More than 6 months'),
 ]
+SOURCE = [
+    ('upwork', 'UpWork'),
+    ('freelancer', 'Freelancer'),
+    ('facebook', 'Facebook'),
+    ('instagram', 'Instagram'),
+    ('linkedin', 'LinkedIn'),
+]
 
 
 class Project(models.Model):
@@ -66,6 +73,7 @@ class Project(models.Model):
     status = models.CharField(choices=STATUS, default=STATUS[0], max_length=128,
                               help_text="https://www.indeed.com/career-advice/career-development/project-statuses")
     term = models.CharField(choices=TERM, default=TERM[0], max_length=256)
+    source = models.CharField(choices=SOURCE, default=SOURCE[0], max_length=32)
     duration = models.CharField(choices=DURATION, default=DURATION[0], max_length=256)
     category = MultiSelectField(choices=CATEGORY, default=CATEGORY[0], max_length=256)
     project_type = models.CharField(choices=TYPE, default=TYPE[0], max_length=256)
@@ -77,8 +85,6 @@ class Project(models.Model):
                                      help_text="Minimum price per hour work")
     max_budget = models.IntegerField(default=0, null=True, blank=True, verbose_name='max pay / hour',
                                      help_text="Maximum price per hour work")
-    fee = models.IntegerField(default=0, null=True, blank=True,
-                              validators=[MaxValueValidator(100), MinValueValidator(1)], help_text="in %")
     people = models.IntegerField(default=1, help_text="How many people this project need?")
     skills = models.ManyToManyField(Skill, help_text="What kind of skills this project need?")
     country = CountryField(blank_label="Select Country", blank=True, null=True)
