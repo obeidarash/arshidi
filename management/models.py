@@ -30,26 +30,20 @@ STATUS = [
     ('completed', 'Completed'),
 ]
 
-TERM = [
-    ('short', "Short-term or part-time work: Less than 30hr/week and less than 3 months"),
-    ('long', "Long-term work: More than 30 hrs/week and more than 3 months")
-]
+# TERM = [
+#     ('short', "Short-term or part-time work: Less than 30hr/week and less than 3 months"),
+#     ('long', "Long-term work: More than 30 hrs/week and more than 3 months")
+# ]
 
-TYPE = [
-    ('onetime', 'One-time project'),
-    ('ongoing', 'Ongoing project'),
-    ('complex', 'Complex project'),
-]
+# TYPE = [
+#     ('onetime', 'One-time project'),
+#     ('ongoing', 'Ongoing project'),
+#     ('complex', 'Complex project'),
+# ]
 
 BUDGET = [
     ('hour', 'Pay by the hour'),
     ('fixed', 'Pay a fixed price'),
-]
-
-EXPERIENCE = [
-    ('expert', 'Expert'),
-    ('intermediate', 'Intermediate'),
-    ('beginner', 'Beginner'),
 ]
 
 DURATION = [
@@ -68,23 +62,33 @@ SOURCE = [
 ]
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=128, help_text="SEO or WordPress", unique=True)
+    slug = models.SlugField(unique=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+
 class Project(models.Model):
+    payment = models.BooleanField(help_text="is payment complete?", default=False)
     title = models.CharField(max_length=512, help_text='Project name or title', verbose_name="Name")
+    Category = models.ManyToManyField(Category, blank=False)
     status = models.CharField(choices=STATUS, default=STATUS[0], max_length=128,
                               help_text="https://www.indeed.com/career-advice/career-development/project-statuses")
-    term = models.CharField(choices=TERM, default=TERM[0], max_length=256)
+    # term = models.CharField(choices=TERM, default=TERM[0], max_length=256)
     source = models.CharField(choices=SOURCE, default=SOURCE[0], max_length=32)
     duration = models.CharField(choices=DURATION, default=DURATION[0], max_length=256)
-    category = MultiSelectField(choices=CATEGORY, default=CATEGORY[0], max_length=256)
-    project_type = models.CharField(choices=TYPE, default=TYPE[0], max_length=256)
-    experience_level = models.CharField(choices=EXPERIENCE, default=EXPERIENCE[0], max_length=256)
+    # project_type = models.CharField(choices=TYPE, default=TYPE[0], max_length=256)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=256)
     budget_type = models.CharField(choices=BUDGET, default=BUDGET[0], max_length=256)
-    fixed_budget = models.IntegerField(default=0, null=True, blank=True)
-    min_budget = models.IntegerField(default=0, null=True, blank=True, verbose_name='Min pay / hour',
-                                     help_text="Minimum price per hour work")
-    max_budget = models.IntegerField(default=0, null=True, blank=True, verbose_name='max pay / hour',
-                                     help_text="Maximum price per hour work")
+    budget = models.IntegerField(default=0, null=False, blank=False)
+    estimation = models.BooleanField(help_text="Is this budget an estimation?", default=False)
     people = models.IntegerField(default=1, help_text="How many people this project need?")
     skills = models.ManyToManyField(Skill, help_text="What kind of skills this project need?")
     country = CountryField(blank_label="Select Country", blank=True, null=True)
@@ -104,6 +108,7 @@ class Project(models.Model):
     # Todo: date,  or not and ETC (Check upWork and freelancer),
     # Todo: (Phase): plan, build and implement, transition & close, completed
     # Todo: contract signed date
+    # Todo: do something about price
 
     def __str__(self):
         return self.title

@@ -1,6 +1,12 @@
 from django.contrib import admin
-from .models import Project, TimeSheet
-from .forms import ProjectAdminForm
+from .models import Project, TimeSheet, Category
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    search_fields = ('title',)
+    prepopulated_fields = {'slug': ['title', ]}
 
 
 @admin.register(TimeSheet)
@@ -28,17 +34,15 @@ class TimeSheetAdmin(admin.ModelAdmin):
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     # fields = ('title', ('budget_type', 'currency'), ('min_budget', 'max_budget', 'fixed_budget'),)
-    form = ProjectAdminForm
-    list_display = ('__str__', 'deadline', 'status', 'category',)
-    autocomplete_fields = ('skills', 'employees', 'contact', 'company',)
+    list_display = ('__str__', 'deadline', 'status', 'payment',)
+    autocomplete_fields = ('skills', 'employees', 'contact', 'company', 'Category')
     search_fields = ('title',)
-    list_filter = ('status', 'category', 'budget_type', 'deadline',)
+    list_filter = ('payment', 'Category', 'status', 'budget_type', 'deadline',)
     ordering = ('-created',)
     filter_horizontal = ('skills',)
     radio_fields = {
-        'experience_level': admin.HORIZONTAL,
         'budget_type': admin.HORIZONTAL,
-        'project_type': admin.HORIZONTAL,
+        # 'project_type': admin.HORIZONTAL,
         'currency': admin.HORIZONTAL,
         # 'category': admin.HORIZONTAL,
     }
