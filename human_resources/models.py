@@ -6,15 +6,10 @@ from django.dispatch import receiver
 import os
 import uuid
 
+
 GENDER = [
     ('Mr', 'Mr'),
     ('Ms', 'Ms')
-]
-
-CURRENCY = [
-    ('USD', 'US Dollar'),
-    ('USDT', 'Tether'),
-    ('IRR', 'Rial'),
 ]
 
 
@@ -98,7 +93,8 @@ class Hire(models.Model):
     positions = models.ManyToManyField(Position, verbose_name="Potential Positions")
     birthday = models.DateField(null=True, blank=True)
     email = models.EmailField(unique=True, null=True, blank=True)
-    currency = models.CharField(choices=CURRENCY, max_length=128, null=True, blank=True)
+    currency = models.ForeignKey('financial.Currency', related_name='hire_currency', null=True, blank=False,
+                                 on_delete=models.CASCADE)
     min_salary = models.IntegerField(blank=True, null=True, verbose_name="Minimum Salary", help_text="per hour")
     max_salary = models.IntegerField(blank=True, null=True, verbose_name="Maximum Salary", help_text="per hour")
     attach = models.FileField(upload_to=upload_file_path, null=True, blank=True, help_text="Like resume and CV")

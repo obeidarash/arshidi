@@ -29,12 +29,11 @@ class ExpenseAdmin(admin.ModelAdmin):
     list_display = ('title', 'to', 'price', 'currency', 'source', 'payer', 'date')
     search_fields = ('title',)
     list_filter = ('currency', 'source', 'payer', 'date',)
-    autocomplete_fields = ('project', 'payer',)
+    autocomplete_fields = ('project', 'payer', 'currency',)
     ordering = ("-date",)
     date_hierarchy = "date"
     radio_fields = {
         'source': admin.HORIZONTAL,
-        'currency': admin.HORIZONTAL
     }
 
 
@@ -44,22 +43,16 @@ class SalaryAdmin(admin.ModelAdmin):
     list_display = ('employee', 'price', 'currency', 'date', 'advance_payment',)
     search_fields = ('title',)
     list_filter = ('currency', 'date',)
-    autocomplete_fields = ('employee', 'project', 'bank_account',)
+    autocomplete_fields = ('employee', 'project', 'bank_account', 'currency',)
     ordering = ("-date",)
     date_hierarchy = "date"
-    radio_fields = {
-        'currency': admin.HORIZONTAL
-    }
 
 
 @admin.register(Income)
 class IncomeAdmin(admin.ModelAdmin):
     list_display = ('title', 'project', 'price', 'currency', 'date',)
     search_fields = ('title',)
-    autocomplete_fields = ('project',)
+    autocomplete_fields = ('project', 'currency',)
     list_filter = ('currency', 'date',)
     ordering = ("-date",)
     date_hierarchy = "date"
-    radio_fields = {
-        'currency': admin.HORIZONTAL
-    }

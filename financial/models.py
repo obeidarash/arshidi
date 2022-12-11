@@ -77,7 +77,7 @@ class Expense(models.Model):
     title = models.CharField(max_length=512, help_text='Buy VPS', null=True)
     to = models.CharField(max_length=256, help_text="UpWork, Uber ETC", null=True)
     price = models.BigIntegerField(null=True, help_text="Be careful with zeros!")
-    currency = models.CharField(choices=CURRENCY, default=CURRENCY[2], max_length=64)
+    currency = models.ForeignKey(Currency, null=False, blank=False, on_delete=models.CASCADE)
     source = models.CharField(choices=SOURCE, default=SOURCE[0], max_length=32, help_text="Who payed this expense?")
     payer = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField(verbose_name='Pay Date', null=True)
@@ -98,7 +98,7 @@ class Expense(models.Model):
 
 class Salary(models.Model):
     advance_payment = models.BooleanField(default=False, help_text="Prepayment or advance payment to the freelancer")
-    currency = models.CharField(choices=CURRENCY, default=CURRENCY[2], max_length=64)
+    currency = models.ForeignKey(Currency, null=False, blank=False, on_delete=models.CASCADE)
     price = models.BigIntegerField(null=True)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
     date = models.DateField(verbose_name='Pay Date', null=True)
@@ -114,7 +114,7 @@ class Salary(models.Model):
     # Todo: Add bank account
     def __str__(self):
         return str(self.employee.firstname) + " " + str(self.employee.lastname) + ": " + str(
-            self.price) + " " + self.currency
+            self.price) + " " + str(self.currency)
 
     class Meta:
         verbose_name_plural = 'Salaries'
@@ -124,7 +124,7 @@ class Income(models.Model):
     title = models.CharField(max_length=512, help_text='2nd payment from Django project X', null=True)
     project = models.ForeignKey('management.Project', related_name='income_project', on_delete=models.CASCADE,
                                 null=True)
-    currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
+    currency = models.ForeignKey(Currency, null=True, blank=False, on_delete=models.CASCADE)
     price = models.BigIntegerField(null=True)
     date = models.DateField(verbose_name='Income Date', null=True)
     link = models.URLField(null=True, blank=True)
