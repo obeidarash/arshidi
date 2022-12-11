@@ -1,5 +1,11 @@
 from django.contrib import admin
-from .models import Expense, Income, Salary, BankAccount, Bank
+from .models import Expense, Income, Salary, BankAccount, Bank, Currency
+
+
+@admin.register(Currency)
+class CurrencyAdmin(admin.ModelAdmin):
+    list_display = ('title', 'code',)
+    search_fields = ('title', 'code',)
 
 
 @admin.register(Bank)

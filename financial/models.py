@@ -36,6 +36,19 @@ def upload_file_path(instance, filename):
     return f"financial/{final_name}"
 
 
+class Currency(models.Model):
+    title = models.CharField(max_length=128, help_text="Rial or US Dollar", unique=True)
+    code = models.SlugField(unique=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = 'Currencies'
+
+
 class Bank(models.Model):
     name = models.CharField(max_length=128, help_text="Resalat or Meli", unique=True)
     slug = models.SlugField(unique=True)
