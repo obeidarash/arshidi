@@ -59,6 +59,8 @@ SOURCE = [
     ('facebook', 'Facebook'),
     ('instagram', 'Instagram'),
     ('linkedin', 'LinkedIn'),
+    ('website', 'Website'),
+    ('direct', 'Direct'),
 ]
 
 
@@ -101,7 +103,9 @@ class Project(models.Model):
     contact = models.ManyToManyField(Contact, related_name="project_contact", blank=True, verbose_name="Contact(s)",
                                      help_text="Who are we in touch with in this project?")
     link = models.URLField(null=True, blank=True)
-    description = HTMLField(null=True, blank=True)
+    description = HTMLField(null=True, blank=True,
+                            help_text="you can write project agreement, duties or salary of each person or any other "
+                                      "thing")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -113,22 +117,3 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
-
-class TimeSheet(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    hour_work = models.CharField(help_text="Hour work - like 07:50 -> 7.5", max_length=4)
-    currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=64)
-    payment_type = models.CharField(choices=BUDGET, default=BUDGET[0], max_length=256,
-                                    help_text="How you pay employee")
-    payment_hourly = models.BigIntegerField(null=True, blank=True, help_text='hourly price for working on this project')
-    payment_fixed = models.BigIntegerField(null=True, blank=True, help_text='payment is not by hour')
-    date = models.DateField()
-    description = HTMLField(null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return str(self.pk) + ": " + str(self.project) + " - " + str(self.employee)
-
-    # Todo: validate payment in this model
