@@ -39,14 +39,36 @@ def upload_file_path(instance, filename):
 class Currency(models.Model):
     title = models.CharField(max_length=128, help_text="Rial or US Dollar", unique=True)
     code = models.SlugField(unique=True)
+    crypto = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True, null=True)
+    updated = models.DateTimeField(auto_now=True, null=True)
+
+    def __str__(self):
+        return self.title + f" ({self.code})"
+
+    class Meta:
+        verbose_name_plural = 'Currencies'
+
+
+class Paypal(models.Model):
+    title = models.CharField(max_length=128, help_text="General title", unique=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return self.title
 
-    class Meta:
-        verbose_name_plural = 'Currencies'
+
+# class Wallet(models.Model):
+#     title = models.CharField(max_length=128, help_text="name of the wallet", unique=True)
+#     currency = models.ForeignKey(Currency, null=False, blank=False, on_delete=models.CASCADE)
+#     network = models.CharField(max_length=64, null=False, blank=False)
+#     address = models.CharField(max_length=256, null=False, blank=False)
+#     created = models.DateTimeField(auto_now_add=True, null=True)
+#     updated = models.DateTimeField(auto_now=True, null=True)
+#
+#     def __str__(self):
+#         return self.currency.title + f" ({self.currency.code})" + " - " + self.network
 
 
 class Bank(models.Model):
@@ -64,8 +86,8 @@ class BankAccount(models.Model):
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE, blank=False, null=True, help_text="Bank name")
     card_number = models.CharField(max_length=20, null=False, blank=False,
                                    help_text="16 Digits card number without dash")
-    account_number = models.CharField(max_length=40, null=False, blank=False, help_text="Shomare Hesab")
-    sheba = models.CharField(max_length=80, null=False, blank=False)
+    account_number = models.CharField(max_length=40, null=True, blank=True, help_text="Shomare Hesab")
+    sheba = models.CharField(max_length=80, null=True, blank=True, help_text='Without IR')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -124,9 +146,12 @@ class Income(models.Model):
     title = models.CharField(max_length=512, help_text='2nd payment from Django project X', null=True)
     project = models.ForeignKey('management.Project', related_name='income_project', on_delete=models.CASCADE,
                                 null=True)
-    currency = models.ForeignKey(Currency, null=True, blank=False, on_delete=models.CASCADE)
-    price = models.BigIntegerField(null=True)
     date = models.DateField(verbose_name='Income Date', null=True)
+    price = models.BigIntegerField(null=True)
+    currency = models.ForeignKey(Currency, null=True, blank=False, on_delete=models.CASCADE)
+    # wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Wallet Address')
+    paypal = models.ForeignKey(Paypal, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Paypal Account')
+    bank = models.ForeignKey(BankAccount, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Bank Account')
     link = models.URLField(null=True, blank=True)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
     comment = models.TextField(null=True, blank=True)
@@ -135,6 +160,9 @@ class Income(models.Model):
 
     def __str__(self):
         return self.title
+
+    # Todo: validate wallet, bank and paypal that all 3 or 2 cant be filled in the same time
+    # Todo: Validate 0- currency of wallet and currency of income should be the same, if the input is filled
 
 
 # delete attach file after model has been deleted

@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'contacts',
     'tinymce',  # https://pypi.org/project/django-tinymce/
     'django_countries',  # https://pypi.org/project/django-countries/
+    'daterange.apps.DateRangeFilterConfig',  # https://pypi.org/project/django-daterange-filterspec/
 ]
 
 MIDDLEWARE = [

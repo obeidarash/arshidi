@@ -1,11 +1,25 @@
 from django.contrib import admin
-from .models import Expense, Income, Salary, BankAccount, Bank, Currency
+from .models import Expense, Income, Salary, BankAccount, Bank, Currency, Paypal
+
+
+# @admin.register(Wallet)
+# class WalletAdmin(admin.ModelAdmin):
+#     list_display = ('title', 'network', 'address',)
+#     search_fields = ('title',)
+#     autocomplete_fields = ('currency',)
+
+
+@admin.register(Paypal)
+class PaypalAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    search_fields = ('title',)
 
 
 @admin.register(Currency)
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ('title', 'code',)
+    list_display = ('title', 'code', 'crypto',)
     search_fields = ('title', 'code',)
+    list_filter = ('crypto',)
 
 
 @admin.register(Bank)
@@ -52,7 +66,7 @@ class SalaryAdmin(admin.ModelAdmin):
 class IncomeAdmin(admin.ModelAdmin):
     list_display = ('title', 'project', 'price', 'currency', 'date',)
     search_fields = ('title',)
-    autocomplete_fields = ('project', 'currency',)
+    autocomplete_fields = ('project', 'currency', 'paypal', 'bank',)
     list_filter = ('currency', 'date',)
     ordering = ("-date",)
     date_hierarchy = "date"
