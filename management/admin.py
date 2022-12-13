@@ -12,7 +12,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     # fields = ('title', ('budget_type', 'currency'), ('min_budget', 'max_budget', 'fixed_budget'),)
-    list_display = ('__str__', 'deadline', 'status', 'budget', 'payment',)
+    list_display = ('__str__', 'deadline', 'status', 'currency', 'budget', 'payment',)
     autocomplete_fields = ('skills', 'employees', 'contact', 'company', 'Category')
     search_fields = ('title',)
     list_filter = ('payment', 'Category', 'status', 'budget_type', 'deadline',)

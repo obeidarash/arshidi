@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Expense, Income, Salary, BankAccount, Bank, Currency, Paypal
+from .models import Expense, Income, Salary, BankAccount, Bank, Currency, Paypal, Category
 
 
 # @admin.register(Wallet)
@@ -7,6 +7,12 @@ from .models import Expense, Income, Salary, BankAccount, Bank, Currency, Paypal
 #     list_display = ('title', 'network', 'address',)
 #     search_fields = ('title',)
 #     autocomplete_fields = ('currency',)
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug', )
+    search_fields = ('title',)
+    prepopulated_fields = {'slug': ['title', ]}
 
 
 @admin.register(Paypal)
@@ -40,10 +46,10 @@ class BankAccountAdmin(admin.ModelAdmin):
 
 @admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'to', 'price', 'currency', 'source', 'payer', 'date')
+    list_display = ('title', 'to', 'price', 'currency', 'category', 'payer', 'date')
     search_fields = ('title',)
-    list_filter = ('currency', 'source', 'payer', 'date',)
-    autocomplete_fields = ('project', 'payer', 'currency',)
+    list_filter = ('currency', 'source', 'payer', 'date', 'category',)
+    autocomplete_fields = ('project', 'payer', 'currency', 'category',)
     ordering = ("-date",)
     date_hierarchy = "date"
     radio_fields = {

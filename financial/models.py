@@ -58,6 +58,8 @@ class Paypal(models.Model):
     def __str__(self):
         return self.title
 
+    # Todo: merge paypal into bank accounts
+
 
 # class Wallet(models.Model):
 #     title = models.CharField(max_length=128, help_text="name of the wallet", unique=True)
@@ -69,6 +71,18 @@ class Paypal(models.Model):
 #
 #     def __str__(self):
 #         return self.currency.title + f" ({self.currency.code})" + " - " + self.network
+
+class Category(models.Model):
+    title = models.CharField(max_length=128, help_text="Office Supplies or Memberships fees", unique=True)
+    slug = models.SlugField(unique=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name_plural = "Categories"
 
 
 class Bank(models.Model):
@@ -102,6 +116,7 @@ class Expense(models.Model):
     currency = models.ForeignKey(Currency, null=False, blank=False, on_delete=models.CASCADE)
     source = models.CharField(choices=SOURCE, default=SOURCE[0], max_length=32, help_text="Who payed this expense?")
     payer = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
     date = models.DateField(verbose_name='Pay Date', null=True)
     project = models.ForeignKey('management.Project', related_name='expense_project', on_delete=models.CASCADE,
                                 blank=True,
@@ -116,6 +131,7 @@ class Expense(models.Model):
         return self.title
 
     # Todo: Approved?
+    # Todo: add category
 
 
 class Salary(models.Model):
