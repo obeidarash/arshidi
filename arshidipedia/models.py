@@ -61,7 +61,7 @@ class Library(models.Model):
     class Meta:
         verbose_name_plural = "Library"
 
-    # Todo: Add Hashtag
+    # Todo: Add Hashtag or Category
 
 
 # delete attach file after model has been deleted

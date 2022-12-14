@@ -6,7 +6,6 @@ from django.dispatch import receiver
 import os
 import uuid
 
-
 GENDER = [
     ('Mr', 'Mr'),
     ('Ms', 'Ms')
@@ -48,9 +47,10 @@ class Skill(models.Model):
         return self.title
 
 
-class Employee(models.Model):  # Todo: Think more about the name
+class Employee(models.Model):
     gender = models.CharField(choices=GENDER, max_length=64)
-    is_active = models.BooleanField(default=True, blank=False, null=False, help_text='This person is currently working')
+    is_active = models.BooleanField(default=True, blank=False, null=False,
+                                    help_text='Is this person currently active?')
     firstname = models.CharField(max_length=128, null=True)
     lastname = models.CharField(max_length=128)
     # Contact
@@ -58,6 +58,10 @@ class Employee(models.Model):  # Todo: Think more about the name
     phone = models.CharField(unique=True, help_text="With dial code: +989125558877", max_length=64)
     telephone = models.CharField(max_length=32, null=True, blank=True)
     link = models.URLField(null=True, blank=True)
+
+    national_id = models.CharField(max_length=16, null=True, blank=True)
+    passport_id = models.CharField(max_length=16, null=True, blank=True)
+    passport_expire = models.DateField(null=True, blank=True)
 
     birthday = models.DateField()
     skills = models.ManyToManyField(Skill)
@@ -77,7 +81,6 @@ class Employee(models.Model):  # Todo: Think more about the name
     def __str__(self):
         return self.firstname + " " + self.lastname
 
-    # Todo: add is_active or is_working for us?
     # Todo: national_id, passport_id, passport_expire,
 
 

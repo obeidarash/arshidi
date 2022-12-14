@@ -99,8 +99,6 @@ class BankAccount(models.Model):
     def __str__(self):
         return self.owner.firstname + " " + self.owner.lastname + " - " + str(self.bank)
 
-    # Todo: validate inputs, all of them cant be empty
-
 
 class Expense(models.Model):
     title = models.CharField(max_length=512, help_text='Buy VPS', null=True)
@@ -123,26 +121,22 @@ class Expense(models.Model):
     def __str__(self):
         return self.title
 
-    # Todo: Approved?
-    # Todo: add category
-
 
 class Salary(models.Model):
     advance_payment = models.BooleanField(default=False, help_text="Prepayment or advance payment to the freelancer")
     currency = models.ForeignKey(Currency, null=False, blank=False, on_delete=models.CASCADE)
     price = models.BigIntegerField(null=True)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True, verbose_name="To employee")
     date = models.DateField(verbose_name='Pay Date', null=True)
     project = models.ManyToManyField('management.Project', related_name='salary_project', blank=True,
                                      verbose_name="Project(s)")
-    bank_account = models.ForeignKey(BankAccount, blank=True, null=True, on_delete=models.CASCADE)
+    bank_account = models.ForeignKey(BankAccount, blank=True, null=True, on_delete=models.CASCADE,
+                                     verbose_name="To bank account")
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)
     comment = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
 
-    # Todo: you can connected to timesheet and automatically calculate hours or price with signals
-    # Todo: Add bank account
     def __str__(self):
         return str(self.employee.firstname) + " " + str(self.employee.lastname) + ": " + str(
             self.price) + " " + str(self.currency)
@@ -168,9 +162,6 @@ class Income(models.Model):
 
     def __str__(self):
         return self.title
-
-    # Todo: validate wallet, bank and paypal that all 3 or 2 cant be filled in the same time
-    # Todo: Validate 0- currency of wallet and currency of income should be the same, if the input is filled
 
 
 # delete attach file after model has been deleted
