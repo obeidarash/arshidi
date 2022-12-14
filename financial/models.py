@@ -50,17 +50,6 @@ class Currency(models.Model):
         verbose_name_plural = 'Currencies'
 
 
-class Paypal(models.Model):
-    title = models.CharField(max_length=128, help_text="General title", unique=True)
-    created = models.DateTimeField(auto_now_add=True, null=True)
-    updated = models.DateTimeField(auto_now=True, null=True)
-
-    def __str__(self):
-        return self.title
-
-    # Todo: merge paypal into bank accounts
-
-
 # class Wallet(models.Model):
 #     title = models.CharField(max_length=128, help_text="name of the wallet", unique=True)
 #     currency = models.ForeignKey(Currency, null=False, blank=False, on_delete=models.CASCADE)
@@ -98,15 +87,19 @@ class Bank(models.Model):
 class BankAccount(models.Model):
     owner = models.ForeignKey(Employee, on_delete=models.CASCADE)
     bank = models.ForeignKey(Bank, on_delete=models.CASCADE, blank=False, null=True, help_text="Bank name")
-    card_number = models.CharField(max_length=20, null=False, blank=False,
+    card_number = models.CharField(max_length=20, null=True, blank=True,
                                    help_text="16 Digits card number without dash")
     account_number = models.CharField(max_length=40, null=True, blank=True, help_text="Shomare Hesab")
     sheba = models.CharField(max_length=80, null=True, blank=True, help_text='Without IR')
+    phone_number = models.CharField(max_length=40, null=True, blank=True, help_text="example: +989981105577")
+    email = models.EmailField(max_length=40, null=True, blank=True, help_text="Mostly for paypal account")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.owner.firstname + " " + self.owner.lastname + " - " + str(self.bank)
+
+    # Todo: validate inputs, all of them cant be empty
 
 
 class Expense(models.Model):
@@ -166,7 +159,6 @@ class Income(models.Model):
     price = models.BigIntegerField(null=True)
     currency = models.ForeignKey(Currency, null=True, blank=False, on_delete=models.CASCADE)
     # wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Wallet Address')
-    paypal = models.ForeignKey(Paypal, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Paypal Account')
     bank = models.ForeignKey(BankAccount, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Bank Account')
     link = models.URLField(null=True, blank=True)
     attach = models.FileField(blank=True, null=True, upload_to=upload_file_path)

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Expense, Income, Salary, BankAccount, Bank, Currency, Paypal, Category
+from .models import Expense, Income, Salary, BankAccount, Bank, Currency, Category
+from .fomrs import BankAccountAdminForm
 
 
 # @admin.register(Wallet)
@@ -10,15 +11,9 @@ from .models import Expense, Income, Salary, BankAccount, Bank, Currency, Paypal
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', )
+    list_display = ('title', 'slug',)
     search_fields = ('title',)
     prepopulated_fields = {'slug': ['title', ]}
-
-
-@admin.register(Paypal)
-class PaypalAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    search_fields = ('title',)
 
 
 @admin.register(Currency)
@@ -39,9 +34,11 @@ class BankAdmin(admin.ModelAdmin):
 
 @admin.register(BankAccount)
 class BankAccountAdmin(admin.ModelAdmin):
-    search_fields = ('owner',)
-    list_display = ('owner', 'bank', 'card_number')
+    form = BankAccountAdminForm
+    search_fields = ('owner', 'email', )
+    list_display = ('owner', 'bank', 'card_number', 'email',)
     autocomplete_fields = ('owner', 'bank',)
+    list_filter = ('owner', )
 
 
 @admin.register(Expense)
@@ -72,7 +69,7 @@ class SalaryAdmin(admin.ModelAdmin):
 class IncomeAdmin(admin.ModelAdmin):
     list_display = ('title', 'project', 'price', 'currency', 'date',)
     search_fields = ('title',)
-    autocomplete_fields = ('project', 'currency', 'paypal', 'bank',)
+    autocomplete_fields = ('project', 'currency', 'bank',)
     list_filter = ('currency', 'date',)
     ordering = ("-date",)
     date_hierarchy = "date"
