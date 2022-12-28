@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    "whitenoise.runserver_nostatic",  # http://whitenoise.evans.io/en/stable/django.html
     'django.contrib.staticfiles',
     'arshidipedia',
     'financial',
@@ -26,8 +27,6 @@ INSTALLED_APPS = [
     'contacts',
     'tinymce',  # https://pypi.org/project/django-tinymce/
     'django_countries',  # https://pypi.org/project/django-countries/
-    "whitenoise.runserver_nostatic",  # http://whitenoise.evans.io/en/stable/django.html
-
 ]
 
 MIDDLEWARE = [
@@ -101,6 +100,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # for compressing static files - whitenoise
 # STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
