@@ -5,6 +5,7 @@ from django.db.models.signals import post_delete, pre_save, post_save
 from django.dispatch import receiver
 import os
 import uuid
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 GENDER = [
     ('Mr', 'Mr'),
@@ -84,10 +85,20 @@ class Employee(models.Model):
     # Todo: national_id, passport_id, passport_expire,
 
 
+def add_rate():
+    rate = []
+    for i in range(10):
+        rate.append(i)
+    RATE = tuple(rate)
+    return RATE
+
+
 class Hire(models.Model):
     potential = models.BooleanField(verbose_name='is Potential?')
     interviewed = models.BooleanField(verbose_name='is Interviewed?')
     interview_date = models.DateTimeField(null=True, blank=True)
+    rate = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0), MaxValueValidator(10)],
+                               help_text="1 is the worst, 10 is the best")
     gender = models.CharField(choices=GENDER, max_length=64)
     firstname = models.CharField(max_length=128, null=True)
     lastname = models.CharField(max_length=128)
