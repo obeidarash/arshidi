@@ -35,10 +35,19 @@ class BankAdmin(admin.ModelAdmin):
 @admin.register(BankAccount)
 class BankAccountAdmin(admin.ModelAdmin):
     form = BankAccountAdminForm
-    search_fields = ('owner', 'email', )
+    search_fields = ('owner', 'email',)
     list_display = ('owner', 'bank', 'card_number', 'email',)
     autocomplete_fields = ('owner', 'bank',)
-    list_filter = ('owner', )
+    list_filter = ('owner',)
+
+
+def duplicate_event(modeladmin, request, queryset):
+    for object in queryset:
+        object.id = None
+        object.save()
+
+
+duplicate_event.short_description = "Duplicate selected expenses"
 
 
 @admin.register(Expense)
@@ -49,6 +58,7 @@ class ExpenseAdmin(admin.ModelAdmin):
     autocomplete_fields = ('project', 'payer', 'currency', 'category',)
     ordering = ("-date",)
     date_hierarchy = "date"
+    actions = [duplicate_event]
     radio_fields = {
         'source': admin.HORIZONTAL,
     }
