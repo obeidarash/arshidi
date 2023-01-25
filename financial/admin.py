@@ -40,11 +40,11 @@ class BankAccountAdmin(admin.ModelAdmin):
     autocomplete_fields = ('owner', 'bank',)
     list_filter = ('owner',)
 
-
+# todo: on the server this def won't delete image in duplicated item
 def duplicate_event(modeladmin, request, queryset):
     for object in queryset:
         object.id = None
-        object.attach = ''
+        object.attach = None
         object.save()
 
 
