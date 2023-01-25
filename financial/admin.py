@@ -44,6 +44,7 @@ class BankAccountAdmin(admin.ModelAdmin):
 def duplicate_event(modeladmin, request, queryset):
     for object in queryset:
         object.id = None
+        object.attach = ''
         object.save()
 
 
