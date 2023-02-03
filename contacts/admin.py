@@ -13,7 +13,7 @@ class TagAdmin(admin.ModelAdmin):
 @admin.register(Contact)
 class ContactsAdmin(admin.ModelAdmin):
     form = ContactAdminForm
-    list_display = ('firstname', 'lastname',)
+    list_display = ('firstname', 'lastname', 'position',)
     search_fields = ('firstname', 'lastname',)
     autocomplete_fields = ('tags',)
     list_filter = ('tags',)

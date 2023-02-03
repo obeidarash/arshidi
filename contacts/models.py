@@ -18,6 +18,7 @@ class Contact(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     firstname = models.CharField(max_length=128, blank=True, null=True)
     lastname = models.CharField(max_length=128, blank=True, null=True)
+    position = models.CharField(max_length=128, blank=True, null=True)
     # Contact
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=32, null=True, blank=True)

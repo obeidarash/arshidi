@@ -88,7 +88,7 @@ class Project(models.Model):
     duration = models.CharField(choices=DURATION, default=DURATION[0], max_length=256)
     # project_type = models.CharField(choices=TYPE, default=TYPE[0], max_length=256)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=256)
-    budget_type = models.CharField(choices=BUDGET, default=BUDGET[0], max_length=256)
+    budget_type = models.CharField(choices=BUDGET, default=BUDGET[1], max_length=256)
     budget = models.IntegerField(default=0, null=False, blank=False)
     estimation = models.BooleanField(help_text="Is this budget an estimation?", default=False)
     people = models.IntegerField(default=1, help_text="How many people this project need?")
