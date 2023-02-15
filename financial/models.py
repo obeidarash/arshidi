@@ -8,7 +8,7 @@ import os
 import uuid
 from django.dispatch import receiver
 from django.db.models.signals import post_delete, pre_save, post_save
-
+from contacts.models import Company
 SOURCE = [
     ('employee', 'Employee'),
     ('company', 'Company')
@@ -102,7 +102,7 @@ class BankAccount(models.Model):
 
 class Expense(models.Model):
     title = models.CharField(max_length=512, help_text='Buy VPS', null=True)
-    to = models.CharField(max_length=256, help_text="UpWork, Uber ETC", null=True)
+    to = models.ForeignKey(Company, on_delete=models.CASCADE, help_text="UpWork, Uber ETC", null=True, blank=False)
     price = models.BigIntegerField(null=True, help_text="Be careful with zeros!")
     currency = models.ForeignKey(Currency, null=False, blank=False, on_delete=models.CASCADE)
     source = models.CharField(choices=SOURCE, default=SOURCE[0], max_length=32, help_text="Who payed this expense?")
@@ -146,7 +146,6 @@ class Salary(models.Model):
 
 
 class Income(models.Model):
-    title = models.CharField(max_length=512, help_text='2nd payment from Django project X', null=True)
     project = models.ForeignKey('management.Project', related_name='income_project', on_delete=models.CASCADE,
                                 null=True)
     date = models.DateField(verbose_name='Income Date', null=True)
