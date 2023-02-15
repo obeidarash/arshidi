@@ -53,10 +53,10 @@ duplicate_event.short_description = "Duplicate selected expenses"
 
 @admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'price', 'to', 'currency', 'category', 'payer', 'date')
+    list_display = ('title', 'price', 'currency', 'category', 'payer', 'date')
     search_fields = ('title',)
     list_filter = ('currency', 'source', 'payer', 'date', 'category',)
-    autocomplete_fields = ('project', 'payer', 'currency', 'category', 'to',)
+    autocomplete_fields = ('project', 'payer', 'currency', 'category',)
     ordering = ("-date",)
     date_hierarchy = "date"
     actions = [duplicate_event]

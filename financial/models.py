@@ -102,7 +102,7 @@ class BankAccount(models.Model):
 
 class Expense(models.Model):
     title = models.CharField(max_length=512, help_text='Buy VPS', null=True)
-    to = models.ForeignKey(Company, on_delete=models.CASCADE, help_text="UpWork, Uber ETC", null=True, blank=False)
+    # to = models.ForeignKey(Company, on_delete=models.CASCADE, help_text="UpWork, Uber ETC", null=True, blank=False)
     price = models.BigIntegerField(null=True, help_text="Be careful with zeros!")
     currency = models.ForeignKey(Currency, null=False, blank=False, on_delete=models.CASCADE)
     source = models.CharField(choices=SOURCE, default=SOURCE[0], max_length=32, help_text="Who payed this expense?")
