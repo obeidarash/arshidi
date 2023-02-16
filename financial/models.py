@@ -146,6 +146,7 @@ class Salary(models.Model):
 
 
 class Income(models.Model):
+    # title = models.CharField(max_length=512, help_text='2nd payment from Django project X', null=True, blank=True)
     project = models.ForeignKey('management.Project', related_name='income_project', on_delete=models.CASCADE,
                                 null=True)
     date = models.DateField(verbose_name='Income Date', null=True)
@@ -160,7 +161,7 @@ class Income(models.Model):
     updated = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return self.title
+        return self.project.title
 
 
 # delete attach file after model has been deleted
