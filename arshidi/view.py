@@ -1,12 +1,24 @@
 from django.shortcuts import redirect, render
-from financial.models import Expense
+from financial.models import Expense, Income, Salary
 from django.db.models import Sum
 
 def home(request):
     expenses = Expense.objects.aggregate(Sum('price'))
-    print(type(expenses))
+    incomes = Income.objects.aggregate(Sum('price'))
+    salaries = Salary.objects.aggregate(Sum('price'))
+
+    # net income based on US Dollar = 460,000 Rial
+    dollar = 460000
+    salaries['price__sum'] = salaries['price__sum'] or 0
+    incomes['price__sum'] = incomes['price__sum'] or 0
+    expenses['price__sum'] = expenses['price__sum'] or 0
+
+    net_income = (expenses['price__sum'] + salaries['price__sum']) - incomes['price__sum'] * dollar
 
     context = {
-        'expenses_sum': expenses['price__sum']
+        'expenses_sum': expenses['price__sum'],
+        'incomes_sum': incomes['price__sum'],
+        'salaries_sum': salaries['price__sum'],
+        'net_income': net_income,
     }
     return render(request, 'index.html', context)

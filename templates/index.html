@@ -19,7 +19,10 @@
     <br>
     <a href="/admin">Go to admin</a>
     <br>
-    Total expenses from the begaining to now (Rial): {{ expenses_sum|intcomma }}
+    <p>Total <u>Expenses</u> from the begaining to now (Rial): {{ expenses_sum|intcomma }}</p>
+    <p>Total <u>Incomes</u> from the begaining to now (Dollar): {{ incomes_sum|intcomma }}</p>
+    <p>Total <u>Salaries</u> from the begaining to now (Rial): {{ salaries_sum|intcomma }}</p>
+    <p>Total <u>Net Income</u> from the begaining to now (Rial): {{ net_income|intcomma }}</p>
 {% endif %}
 </body>
 </html>
