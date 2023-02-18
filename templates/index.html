@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,5 +15,11 @@
 <!-- You are curies and we like that -->
 <!-- We might have a job for you, contact us -->
 <!-- +989981105577 -->
+{% if request.user.is_authenticated and request.user.is_superuser %}
+    <br>
+    <a href="/admin">Go to admin</a>
+    <br>
+    Total expenses from the begaining to now (Rial): {{ expenses_sum|intcomma }}
+{% endif %}
 </body>
 </html>

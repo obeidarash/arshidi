@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.humanize', # https://docs.djangoproject.com/en/dev/ref/contrib/humanize/#intcomma
     "whitenoise.runserver_nostatic",  # http://whitenoise.evans.io/en/stable/django.html
     'django.contrib.staticfiles',
     'arshidipedia',
