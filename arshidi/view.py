@@ -13,7 +13,7 @@ def home(request):
     incomes['price__sum'] = incomes['price__sum'] or 0
     expenses['price__sum'] = expenses['price__sum'] or 0
 
-    net_income = (expenses['price__sum'] + salaries['price__sum']) - incomes['price__sum'] * dollar
+    net_income = (incomes['price__sum'] * dollar) - (expenses['price__sum'] + salaries['price__sum'])
 
     context = {
         'expenses_sum': expenses['price__sum'],
