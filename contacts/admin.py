@@ -24,10 +24,13 @@ class ContactsAdmin(admin.ModelAdmin):
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'tag',)
+    list_display = ('name', 'contacts','tag',)
     autocomplete_fields = ('contact', 'tags',)
     search_fields = ('name',)
     list_filter = ('tags',)
 
     def tag(self, obj):
         return ",\n".join([p.title for p in obj.tags.all()])
+
+    def contacts(self, obj):
+        return ",\n".join([f'{p.firstname} {p.lastname}' for p in obj.contact.all()])
