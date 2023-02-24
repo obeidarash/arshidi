@@ -7,7 +7,7 @@ from django.utils.html import format_html
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('title',)
+    list_display = ('title', 'slug',)
     search_fields = ('title',)
     prepopulated_fields = {'slug': ['title', ]}
 
@@ -15,14 +15,14 @@ class TagAdmin(admin.ModelAdmin):
 @admin.register(Contact)
 class ContactsAdmin(admin.ModelAdmin):
     form = ContactAdminForm
-    list_display = ('firstname', 'lastname', 'position', 'tag',)
+    list_display = ('__str__', 'position', 'tag',)
     search_fields = ('firstname', 'lastname',)
     autocomplete_fields = ('tags',)
     list_filter = ('tags',)
 
     def tag(self, obj):
         return ",\n".join([p.title for p in obj.tags.all()])
-
+    
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):

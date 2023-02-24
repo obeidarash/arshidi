@@ -91,7 +91,6 @@ class Project(models.Model):
     budget_type = models.CharField(choices=BUDGET, default=BUDGET[1], max_length=256)
     budget = models.IntegerField(default=0, null=False, blank=False)
     estimation = models.BooleanField(help_text="Is this budget an estimation?", default=False)
-    people = models.IntegerField(default=1, help_text="How many people this project need?")
     skills = models.ManyToManyField(Skill, help_text="What kind of skills this project need?")
     country = CountryField(blank_label="Select Country", blank=True, null=True)
     timezone = TimeZoneField(choices_display="WITH_GMT_OFFSET", blank=True, null=True, help_text="Client Timezone")

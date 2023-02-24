@@ -18,6 +18,8 @@ class Contact(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
     firstname = models.CharField(max_length=128, blank=True, null=True)
     lastname = models.CharField(max_length=128, blank=True, null=True)
+    middlename = models.CharField(max_length=128, blank=True, null=True)
+    nickname = models.CharField(max_length=128, blank=True, null=True)
     position = models.CharField(max_length=128, blank=True, null=True)
     # Contact
     email = models.EmailField(null=True, blank=True)
@@ -31,6 +33,14 @@ class Contact(models.Model):
     address = models.CharField(max_length=512, null=True, blank=True)
     plate = models.IntegerField(null=True, blank=True)
     zipcode = models.CharField(max_length=32, null=True, blank=True)
+    # Social Media
+    linkedin = models.CharField(max_length=512, null=True, blank=True)
+    facebook = models.CharField(max_length=512, null=True, blank=True)
+    instagram = models.CharField(max_length=512, null=True, blank=True)
+    twitter = models.CharField(max_length=512, null=True, blank=True)
+    youtube = models.CharField(max_length=512, null=True, blank=True)
+    telegram = models.CharField(max_length=512, null=True, blank=True)
+    whatsapp = models.CharField(max_length=512, null=True, blank=True, verbose_name="WhatsApp")
 
     comment = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
@@ -61,6 +71,14 @@ class Company(models.Model):
     address = models.CharField(max_length=512, null=True, blank=True)
     plate = models.IntegerField(null=True, blank=True)
     zipcode = models.CharField(max_length=32, null=True, blank=True)
+    # Social Media
+    linkedin = models.CharField(max_length=512, null=True, blank=True)
+    facebook = models.CharField(max_length=512, null=True, blank=True)
+    instagram = models.CharField(max_length=512, null=True, blank=True)
+    twitter = models.CharField(max_length=512, null=True, blank=True)
+    youtube = models.CharField(max_length=512, null=True, blank=True)
+    telegram = models.CharField(max_length=512, null=True, blank=True)
+    whatsapp = models.CharField(max_length=512, null=True, blank=True, verbose_name="WhatsApp")
 
     comment = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True, null=True)
