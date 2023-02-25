@@ -107,7 +107,7 @@ class Expense(models.Model):
     currency = models.ForeignKey(Currency, null=False, blank=False, on_delete=models.CASCADE)
     source = models.CharField(choices=SOURCE, default=SOURCE[0], max_length=32, help_text="Who payed this expense?")
     payer = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE, help_text="https://www.brex.com/journal/business-expense-categories")
     date = models.DateField(verbose_name='Pay Date', null=True)
     project = models.ForeignKey('management.Project', related_name='expense_project', on_delete=models.CASCADE,
                                 blank=True,
