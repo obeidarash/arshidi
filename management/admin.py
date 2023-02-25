@@ -27,7 +27,9 @@ class ProjectAdmin(admin.ModelAdmin):
     
 
     def get_companies(self, obj):
-        return format_html(f'<a href="/admin/contacts/company/{obj.company.id}/change/">{obj.company.name}</a>')
+        if obj.company:
+            return format_html(f'<a href="/admin/contacts/company/{obj.company.id}/change/">{obj.company.name}</a>')
+        return '-'
     get_companies.short_description = "Companies"
 
     def get_contacts(self, obj):
