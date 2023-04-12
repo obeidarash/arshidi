@@ -16,7 +16,7 @@ class TagAdmin(admin.ModelAdmin):
 class ContactsAdmin(admin.ModelAdmin):
     form = ContactAdminForm
     list_display = ('__str__', 'position', 'tag',)
-    search_fields = ('firstname', 'lastname',)
+    search_fields = ('firstname', 'lastname', 'middlename', 'nickname', )
     autocomplete_fields = ('tags',)
     list_filter = ('tags',)
 

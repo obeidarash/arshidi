@@ -51,7 +51,7 @@ class Library(models.Model):
     file = models.FileField(upload_to=upload_file_path, null=True, blank=True,
                             help_text="Upload your pdf, docx, .... file in here")
     link = models.URLField(blank=True, null=True)
-    content = HTMLField()
+    content = models.TextField()
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
 

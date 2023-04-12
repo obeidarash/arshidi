@@ -7,8 +7,8 @@ def home(request):
     incomes = Income.objects.aggregate(Sum('price'))
     salaries = Salary.objects.aggregate(Sum('price'))
 
-    # net income based on US Dollar = 460,000 Rial
-    dollar = 490000
+    # net income based on US Dollar = 500,000 Rial
+    dollar = 500000
     salaries['price__sum'] = salaries['price__sum'] or 0
     incomes['price__sum'] = incomes['price__sum'] or 0
     expenses['price__sum'] = expenses['price__sum'] or 0
