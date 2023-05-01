@@ -22,6 +22,19 @@
     <p>Total <u>Incomes</u> from the begaining to now (Dollar): {{ incomes_sum|intcomma }}</p>
     <p>Total <u>Salaries</u> from the begaining to now (Rial): {{ salaries_sum|intcomma }}</p>
     <p>Total <u>Net Income</u> from the begaining to now (Rial): {{ net_income|intcomma }}</p>
+    Project Status:
+    <ul>
+        <li><b>Upcoming:</b> This is a project that's still under review by a client.</li>
+        <li><b>Not started:</b> This term shows that a project is approved but has not been started yet.</li>
+        <li><b>Active:</b> This means that a project iss approved and still being completed.</li>
+        <li><b>Overdue:</b> This means that a project is still in progress but that the deadline for completion has passed.</li>
+        <li><b>Pending:</b> Pending refers to projects that have been approved and started but need to pause work temporarily.</li>
+        <li><b>Canceled:</b> The term canceled means that a project is no longer active but that you can still access the information about its progress from reports (When an Active project gets cancelled.).</li>
+        <li><b>Priority:</b> Priority indicates that a project should be addressed immediately before other projects.</li>
+        <li><b>Completed:</b> !</li>
+        <li><b>Refunded: </b>When an Active project gets cancelled and refunded. </li>
+        <li><b>Failed: </b>When an Upcoming project gets cancelled.</li>
+    </ul>
 {% endif %}
 </body>
 </html>

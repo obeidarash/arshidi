@@ -28,6 +28,8 @@ STATUS = [
     ('canceled', 'Canceled'),
     ('priority', 'Priority'),
     ('completed', 'Completed'),
+    ('refunded', 'Refunded'),
+    ('failed', 'Failed'),
 ]
 
 # TERM = [
