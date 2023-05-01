@@ -11,7 +11,7 @@ from django.utils.html import format_html
 @admin.register(File)
 class FileAdmin(admin.ModelAdmin):
     list_display = ('title', 'employee', 'file',)
-    search_fields = ('title',)
+    search_fields = ('title', 'content', )
     autocomplete_fields = ("employee",)
     list_filter = ('employee',)
     ordering = ('-created',)
