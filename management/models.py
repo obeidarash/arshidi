@@ -91,7 +91,7 @@ class Project(models.Model):
     # project_type = models.CharField(choices=TYPE, default=TYPE[0], max_length=256)
     currency = models.CharField(choices=CURRENCY, default=CURRENCY[0], max_length=256)
     budget_type = models.CharField(choices=BUDGET, default=BUDGET[1], max_length=256)
-    budget = models.IntegerField(default=0, null=False, blank=False)
+    budget = models.FloatField(default=0, null=False, blank=False)
     estimation = models.BooleanField(help_text="Is this budget an estimation?", default=False)
     skills = models.ManyToManyField(Skill, help_text="What kind of skills this project need?")
     country = CountryField(blank_label="Select Country", blank=True, null=True)
