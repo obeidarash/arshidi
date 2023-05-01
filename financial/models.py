@@ -150,7 +150,7 @@ class Income(models.Model):
     project = models.ForeignKey('management.Project', related_name='income_project', on_delete=models.CASCADE,
                                 null=True)
     date = models.DateField(verbose_name='Income Date', null=True)
-    price = models.BigIntegerField(null=True)
+    price = models.FloatField(null=True)
     currency = models.ForeignKey(Currency, null=True, blank=False, on_delete=models.CASCADE)
     # wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Wallet Address')
     bank = models.ForeignKey(BankAccount, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Bank Account')
