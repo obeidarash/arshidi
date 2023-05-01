@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import Expense, Income, Salary, BankAccount, Bank, Currency, Category
 from .fomrs import BankAccountAdminForm
+from django.utils.html import format_html
 
 
 # @admin.register(Wallet)
@@ -53,7 +54,7 @@ duplicate_event.short_description = "Duplicate selected expenses"
 
 @admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
-    list_display = ('title', 'price', 'to', 'category', 'currency', 'date')
+    list_display = ('title', 'price', 'get_companies', 'category', 'currency', 'date')
     search_fields = ('title', 'comment', )
     list_filter = ('currency', 'source', 'payer', 'date', 'category',)
     autocomplete_fields = ('project', 'payer', 'currency', 'category', 'to',)
@@ -64,6 +65,12 @@ class ExpenseAdmin(admin.ModelAdmin):
         'source': admin.HORIZONTAL,
     }
 
+
+    def get_companies(self, obj):
+        if obj.to:
+            return format_html(f'<a href="/admin/contacts/company/{obj.to.id}/change/">{obj.to.name}</a>')
+        return '-'
+    get_companies.short_description = "Companies"
 
 @admin.register(Salary)
 class SalaryAdmin(admin.ModelAdmin):
