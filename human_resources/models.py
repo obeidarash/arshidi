@@ -55,8 +55,8 @@ class Employee(models.Model):
     firstname = models.CharField(max_length=128, null=True)
     lastname = models.CharField(max_length=128)
     # Contact
-    email = models.EmailField(unique=True)
-    phone = models.CharField(unique=True, help_text="With dial code: +989125558877", max_length=64)
+    email = models.EmailField(unique=True, null=True, blank=True)
+    phone = models.CharField(unique=True, help_text="With dial code: +989125558877", max_length=64, null=True, blank=True)
     telephone = models.CharField(max_length=32, null=True, blank=True)
     link = models.URLField(null=True, blank=True)
 
@@ -64,7 +64,7 @@ class Employee(models.Model):
     passport_id = models.CharField(max_length=16, null=True, blank=True)
     passport_expire = models.DateField(null=True, blank=True)
 
-    birthday = models.DateField()
+    birthday = models.DateField(null=True, blank=True)
     skills = models.ManyToManyField(Skill)
     positions = models.ManyToManyField(Position)
     # Address
