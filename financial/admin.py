@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Expense, Income, Salary, BankAccount, Bank, Currency, Category
-from .fomrs import BankAccountAdminForm
+from .fomrs import BankAccountAdminForm, SalaryAdminForm
 from django.utils.html import format_html
 
 
@@ -74,13 +74,24 @@ class ExpenseAdmin(admin.ModelAdmin):
 
 @admin.register(Salary)
 class SalaryAdmin(admin.ModelAdmin):
+    form = SalaryAdminForm
     # fields = (('currency', 'price'), ('employee', 'date'), 'project', 'attach', 'comment')
-    list_display = ('employee', 'price', 'currency', 'date', 'advance_payment',)
+    list_display = ('get_name', 'price', 'currency', 'date', 'advance_payment',)
     search_fields = ('title',)
     list_filter = ('currency', 'date',)
-    autocomplete_fields = ('employee', 'project', 'bank_account', 'currency',)
+    autocomplete_fields = ('employee', 'project', 'bank_account', 'currency', 'contact', 'company', )
     ordering = ("-date",)
     date_hierarchy = "date"
+
+    def get_name(self, obj):
+        if obj.employee:
+            return f"{obj.employee.firstname} {obj.employee.lastname}"
+        elif obj.contact:
+            return f"{obj.contact.firstname} {obj.contact.lastname}"
+        elif obj.company:
+            return f"{obj.company.name}"
+        return '-'
+    get_name.short_description = "Name"
 
 
 @admin.register(Income)

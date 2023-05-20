@@ -8,7 +8,8 @@ import os
 import uuid
 from django.dispatch import receiver
 from django.db.models.signals import post_delete, pre_save, post_save
-from contacts.models import Company
+from contacts.models import Company, Contact
+
 SOURCE = [
     ('employee', 'Employee'),
     ('company', 'Company')
@@ -126,7 +127,9 @@ class Salary(models.Model):
     advance_payment = models.BooleanField(default=False, help_text="Prepayment or advance payment to the freelancer")
     currency = models.ForeignKey(Currency, null=False, blank=False, on_delete=models.CASCADE)
     price = models.BigIntegerField(null=True)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True, verbose_name="To employee")
+    employee = models.ForeignKey(Employee, null=True, blank=True, on_delete=models.CASCADE)
+    contact = models.ForeignKey(Contact, null=True, blank=True,on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, null=True, blank=True,on_delete=models.CASCADE)
     date = models.DateField(verbose_name='Pay Date', null=True)
     project = models.ManyToManyField('management.Project', related_name='salary_project', blank=True,
                                      verbose_name="Project(s)")
@@ -137,9 +140,9 @@ class Salary(models.Model):
     created = models.DateTimeField(auto_now_add=True, null=True)
     updated = models.DateTimeField(auto_now=True, null=True)
 
-    def __str__(self):
-        return str(self.employee.firstname) + " " + str(self.employee.lastname) + ": " + str(
-            self.price) + " " + str(self.currency)
+    # def __str__(self):
+    #     return str(self.employee.firstname) + " " + str(self.employee.lastname) + ": " + str(
+    #         self.price) + " " + str(self.currency)
 
     class Meta:
         verbose_name_plural = 'Salaries'
