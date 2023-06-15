@@ -68,7 +68,7 @@ class ExpenseAdmin(admin.ModelAdmin):
 
     def get_companies(self, obj):
         if obj.to:
-            return format_html(f'<a href="/admin/contacts/company/{obj.to.id}/change/">{obj.to.name}</a>')
+            return format_html(f'<a target="_blank" href="/admin/contacts/company/{obj.to.id}/change/">{obj.to.name}</a>')
         return '-'
     get_companies.short_description = "Companies"
 
