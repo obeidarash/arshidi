@@ -78,7 +78,7 @@ class SalaryAdmin(admin.ModelAdmin):
     # fields = (('currency', 'price'), ('employee', 'date'), 'project', 'attach', 'comment')
     list_display = ('get_name', 'price', 'currency', 'date', 'advance_payment',)
     search_fields = ('title',)
-    list_filter = ('currency', 'date',)
+    list_filter = ('currency', 'date', 'employee', )
     autocomplete_fields = ('employee', 'project', 'bank_account', 'currency', 'contact', 'company', )
     ordering = ("-date",)
     date_hierarchy = "date"
